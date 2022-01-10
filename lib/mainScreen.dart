@@ -75,20 +75,24 @@ class _ExploreState extends State<mainScreen> {
     //  shrinkWrap: true,
     // ),
 
-    GridView.builder(
-        itemCount: bookss.length,
-        itemBuilder: (BuildContext context, int index) {
-          return BookItem(title: bookss[index].title, image: bookss[index].image, id: bookss[index].id);
-        },
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 5,
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
-          childAspectRatio: 5 / 3,
+    Container(
+      height: 480,
+      child: GridView.builder(
+          itemCount: bookss.length,
+          itemBuilder: (BuildContext context, int index) {
+            return BookItem(title: bookss[index].title, image: bookss[index].image, id: bookss[index].id);
+          },
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 5,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5,
+            childAspectRatio: 5 / 3,
+          ),
+          padding: EdgeInsets.all(10),
+          shrinkWrap: true,
         ),
-        padding: EdgeInsets.all(10),
-        shrinkWrap: true,
-      )
+    ),
+    Text("Hello"),
         ],
      
       ),

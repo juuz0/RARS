@@ -33,5 +33,18 @@ Book(id: 3, title: "abc", image: "abc.com"),
 Book(id: 3, title: "abc", image: "abc.com"),
 Book(id: 3, title: "abc", image: "abc.com"),
 Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+Book(id: 3, title: "abc", image: "abc.com"),
+
+
+
 
 ];
