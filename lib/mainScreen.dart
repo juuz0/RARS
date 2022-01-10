@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rars/data.dart';
+import 'book.dart';
+import 'bookItem.dart';
 
 class mainScreen extends StatefulWidget {
   @override
@@ -11,7 +14,6 @@ class _ExploreState extends State<mainScreen> {
     super.initState();
     setState(() {});
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +63,34 @@ class _ExploreState extends State<mainScreen> {
                     fillColor: Colors.blue[50]),
               ),
             ),
-          )
+          ),
+    //       GridView.count(
+    //         crossAxisCount: 5,
+    //   padding: const EdgeInsets.all(30),
+    //   children: DUMMY_BOOKS
+    //       .map(
+    //         (catData) => BookItem(title: catData.title, image: catData.image, id: catData.id)
+    //       )
+    //       .toList(),
+    //  shrinkWrap: true,
+    // ),
+
+    GridView.builder(
+        itemCount: bookss.length,
+        itemBuilder: (BuildContext context, int index) {
+          return BookItem(title: bookss[index].title, image: bookss[index].image, id: bookss[index].id);
+        },
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 5,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
+          childAspectRatio: 5 / 3,
+        ),
+        padding: EdgeInsets.all(10),
+        shrinkWrap: true,
+      )
         ],
+     
       ),
     );
   }
