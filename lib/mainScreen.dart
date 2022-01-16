@@ -64,16 +64,7 @@ class _ExploreState extends State<mainScreen> {
               ),
             ),
           ),
-    //       GridView.count(
-    //         crossAxisCount: 5,
-    //   padding: const EdgeInsets.all(30),
-    //   children: DUMMY_BOOKS
-    //       .map(
-    //         (catData) => BookItem(title: catData.title, image: catData.image, id: catData.id)
-    //       )
-    //       .toList(),
-    //  shrinkWrap: true,
-    // ),
+   
 
     Container(
       height: 480,
@@ -82,7 +73,7 @@ class _ExploreState extends State<mainScreen> {
           itemBuilder: (BuildContext context, int index) {
             return BookItem(title: bookss[index].title, image: bookss[index].image, id: bookss[index].id);
           },
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 5,
             mainAxisSpacing: 5,
             crossAxisSpacing: 5,
