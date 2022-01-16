@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:rars/data.dart';
 import 'package:rars/fileLoader.dart';
 import 'book.dart';
 import 'bookItem.dart';
@@ -10,10 +11,21 @@ class mainScreen extends StatefulWidget {
 }
 
 class _ExploreState extends State<mainScreen> {
+  List<Book> bookList = [
+    Book(id: 1, title: "abc", image: "abc.com"),
+  ];
+
   @override
   void initState() {
     super.initState();
     setState(() {});
+  }
+
+  void addBookToLibrary(Book b) {
+    log("added book");
+    setState(() {
+      bookList.add(b);
+    });
   }
 
   @override
@@ -69,12 +81,12 @@ class _ExploreState extends State<mainScreen> {
           Container(
             height: 480,
             child: GridView.builder(
-              itemCount: bookss.length,
+              itemCount: bookList.length,
               itemBuilder: (BuildContext context, int index) {
                 return BookItem(
-                    title: bookss[index].title,
-                    image: bookss[index].image,
-                    id: bookss[index].id);
+                    title: bookList[index].title,
+                    image: bookList[index].image,
+                    id: bookList[index].id);
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
@@ -87,9 +99,9 @@ class _ExploreState extends State<mainScreen> {
             ),
           ),
           const Spacer(),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(16.0),
-            child: FileLoader(),
+            child: FileLoader(addBookToLibrary),
           ),
         ],
       ),
