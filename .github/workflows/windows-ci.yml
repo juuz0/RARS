@@ -1,0 +1,33 @@
+
+name: windows-latest
+
+# Run on every branch
+on: [push]
+    
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.8.1'
+        channel: 'any'
+
+    - run: flutter --version
+
+    - name: Get flutter dependencies
+      run: flutter pub get
+
+    - name: Statically analyze the Dart code for any errors
+      run: flutter analyze .
+    
+    - name: Run widget tests for our flutter project
+      run: flutter test
+
+    - name: Allow windows desktop
+      run: flutter config --enable-windows-desktop
+    
+    - name: Build app finally!! ^_^
+      run: flutter build windows

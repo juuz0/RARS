@@ -1,0 +1,32 @@
+
+name: windows-make
+
+# Run on every branch
+on:
+  push:
+    branches:
+    - master
+    
+    
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.8.1'
+        channel: 'any'
+
+    - run: flutter --version
+
+    - name: Get flutter dependencies
+      run: flutter pub get
+        
+    - name: Build app finally!! ^_^
+      run: flutter build windows
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: release exe
+        path: build/windows/runner/Release/
