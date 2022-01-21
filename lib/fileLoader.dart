@@ -42,7 +42,7 @@ class FileLoader extends StatelessWidget {
         const Text(
           "Load new file",
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 20,
           ),
         ),
       ],
