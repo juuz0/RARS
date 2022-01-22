@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rars/main_screen.dart';
+import 'package:rars/mainScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   // This widget is the root of your application.
-
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: const MainScreen(),
+      home: mainScreen(),
     );
   }
 }

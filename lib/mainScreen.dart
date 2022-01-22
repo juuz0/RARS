@@ -1,38 +1,26 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:lib/mainScreen.dart
 import 'package:rars/fileLoader.dart';
 import 'book.dart';
 import 'bookItem.dart';
-=======
-import 'package:rars/data.dart';
-import 'book_item.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
->>>>>>> f033158 (Fix all static analysis problems):lib/main_screen.dart
-
+class mainScreen extends StatefulWidget {
   @override
   _ExploreState createState() => _ExploreState();
 }
 
-<<<<<<< HEAD:lib/mainScreen.dart
 class _ExploreState extends State<mainScreen> {
   List<Book> bookList = [
     Book(id: 1, title: "abc", image: "abc.com"),
   ];
 
-=======
-class _ExploreState extends State<MainScreen> {
->>>>>>> f033158 (Fix all static analysis problems):lib/main_screen.dart
   @override
   void initState() {
     super.initState();
     setState(() {});
   }
 
-<<<<<<< HEAD:lib/mainScreen.dart
   void addBookToLibrary(Book b) {
     log("added book");
     setState(() {
@@ -40,8 +28,6 @@ class _ExploreState extends State<MainScreen> {
     });
   }
 
-=======
->>>>>>> f033158 (Fix all static analysis problems):lib/main_screen.dart
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +63,7 @@ class _ExploreState extends State<MainScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Center(
-            child: SizedBox(
+            child: Container(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
@@ -92,15 +78,15 @@ class _ExploreState extends State<MainScreen> {
               ),
             ),
           ),
-          SizedBox(
+          Container(
             height: 480,
             child: GridView.builder(
-              itemCount: bookss.length,
+              itemCount: bookList.length,
               itemBuilder: (BuildContext context, int index) {
                 return BookItem(
-                    title: bookss[index].title,
-                    image: bookss[index].image,
-                    id: bookss[index].id);
+                    title: bookList[index].title,
+                    image: bookList[index].image,
+                    id: bookList[index].id);
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 5,
@@ -111,17 +97,12 @@ class _ExploreState extends State<MainScreen> {
               padding: const EdgeInsets.all(10),
               shrinkWrap: true,
             ),
-<<<<<<< HEAD:lib/mainScreen.dart
           ),
           const Spacer(),
           Padding(
             padding: EdgeInsets.all(16.0),
             child: FileLoader(addBookToLibrary),
           ),
-=======
-          ),
-          const Text("Hello"),
->>>>>>> f033158 (Fix all static analysis problems):lib/main_screen.dart
         ],
       ),
     );
