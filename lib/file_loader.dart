@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:io';
 import 'dart:developer';
 import 'book.dart';
 
 class FileLoader extends StatelessWidget {
   final Function addBook;
-  FileLoader(this.addBook);
+  const FileLoader(this.addBook, {Key? key}) : super(key: key);
 
   void pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -17,7 +16,7 @@ class FileLoader extends StatelessWidget {
     if (result != null) {
       PlatformFile file = result.files.first;
       log(file.name);
-      Book newB = new Book(id: 1, image: "kekw", title: file.name);
+      Book newB = Book(id: 1, image: "kekw", title: file.name);
       addBook(newB);
     } else {
       log('User cancelled');

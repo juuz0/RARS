@@ -1,18 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:rars/fileLoader.dart';
+import 'book_item.dart';
 import 'book.dart';
-import 'bookItem.dart';
+import 'file_loader.dart';
 
-class mainScreen extends StatefulWidget {
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
   @override
   _ExploreState createState() => _ExploreState();
 }
 
-class _ExploreState extends State<mainScreen> {
+class _ExploreState extends State<MainScreen> {
   List<Book> bookList = [
-    Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
   ];
 
   @override
@@ -63,7 +64,7 @@ class _ExploreState extends State<mainScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Center(
-            child: Container(
+            child: SizedBox(
               width: 500,
               child: TextField(
                 decoration: InputDecoration(
@@ -78,7 +79,7 @@ class _ExploreState extends State<mainScreen> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: 480,
             child: GridView.builder(
               itemCount: bookList.length,
@@ -100,7 +101,7 @@ class _ExploreState extends State<mainScreen> {
           ),
           const Spacer(),
           Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             child: FileLoader(addBookToLibrary),
           ),
         ],
