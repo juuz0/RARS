@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:rars/tabs.dart';
 import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
+import 'tabs.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -45,11 +47,14 @@ class _ExploreState extends State<MainScreen> {
         ),
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.settings),
-          color: Colors.blue,
-          tooltip: "Settings",
-          onPressed: () {},
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            color: Colors.blue,
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
         ),
         actions: [
           IconButton(
@@ -57,6 +62,12 @@ class _ExploreState extends State<MainScreen> {
             icon: const Icon(Icons.color_lens),
             color: Colors.blue,
             tooltip: "Themes",
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            color: Colors.blue,
+            tooltip: "Settings",
+            onPressed: () {},
           ),
         ],
       ),
@@ -106,6 +117,7 @@ class _ExploreState extends State<MainScreen> {
           ),
         ],
       ),
+      drawer: const tabs(),
     );
   }
 }

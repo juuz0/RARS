@@ -17,7 +17,10 @@ class FileLoader extends StatelessWidget {
       PlatformFile file = result.files.first;
       log(file.name);
       Book newB = Book(id: 1, image: "kekw", title: file.name);
+      
+      log('added to list');
       addBook(newB);
+      
     } else {
       log('User cancelled');
     }
