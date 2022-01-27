@@ -1,57 +1,51 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:rars/tabBook.dart';
+import 'package:rars/tab_book.dart';
 import 'book.dart';
-import 'book_item.dart';
-class tabs extends StatefulWidget {
-  const tabs({ Key? key }) : super(key: key);
+
+class Tabs extends StatefulWidget {
+  const Tabs({Key? key}) : super(key: key);
 
   @override
-  _tabsState createState() => _tabsState();
+  _TabsState createState() => _TabsState();
 }
 
-class _tabsState extends State<tabs> {
-
-   void initState() {
+class _TabsState extends State<Tabs> {
+  @override
+  void initState() {
     super.initState();
     setState(() {});
   }
 
-   void addTab(Book b) {
+  void addTab(Book b) {
     setState(() {
       log('tab added');
-      tabForBook();
+      const TabForBook();
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-           
-         width: 40,
-         child: Drawer(
-          backgroundColor: Colors.blue,
-    child: ListView(
-    padding: EdgeInsets.zero,
-    children: [
-      Container(
-        height: 50,
-        padding: EdgeInsets.zero,
-        child: const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+    return SizedBox(
+      width: 40,
+      child: Drawer(
+        backgroundColor: Colors.blue,
+        child: ListView(padding: EdgeInsets.zero, children: [
+          Container(
+            height: 50,
+            padding: EdgeInsets.zero,
+            child: const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(''),
             ),
-            child: Text(''),
-        ),
-      ),
-      const tabForBook(),
-      const tabForBook(),
-      const tabForBook(),
-
-
-    ]),
+          ),
+          const TabForBook(),
+          const TabForBook(),
+          const TabForBook(),
+        ]),
       ),
     );
   }
