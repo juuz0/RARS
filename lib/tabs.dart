@@ -31,17 +31,15 @@ class _TabsState extends State<Tabs> {
       width: 40,
       child: Drawer(
         backgroundColor: Colors.blue,
-        child: ListView(padding: EdgeInsets.zero, children: [
-          Container(
-            height: 50,
-            padding: EdgeInsets.zero,
-            child: const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(''),
-            ),
-          ),
+        child: ListView(padding: EdgeInsets.zero, 
+        children: [
+             IconButton(
+            icon: const Icon(Icons.menu),
+            color: Colors.white,
+
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            }),
           const TabForBook(),
           const TabForBook(),
           const TabForBook(),
