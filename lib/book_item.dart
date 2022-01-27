@@ -18,18 +18,22 @@ class BookItem extends StatelessWidget {
       // onTap: ,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          elevation: 2,
-          margin: const EdgeInsets.all(5),
-          child: Column(
-            children: [
-              Text(title),
-              Text("`$id`"),
-              Text(image),
-            ],
+        child: SizedBox(
+          height: 200,
+          width: 300,
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 2,
+            margin: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Text(title),
+                Text("`$id`"),
+                Text(image),
+              ],
+            ),
           ),
         ),
       ),

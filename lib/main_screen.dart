@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:rars/tabs.dart';
 import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
+import 'tabs.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -14,6 +16,50 @@ class MainScreen extends StatefulWidget {
 class _ExploreState extends State<MainScreen> {
   List<Book> bookList = [
     const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com")
   ];
 
   @override
@@ -32,6 +78,7 @@ class _ExploreState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -45,11 +92,14 @@ class _ExploreState extends State<MainScreen> {
         ),
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.settings),
-          color: Colors.blue,
-          tooltip: "Settings",
-          onPressed: () {},
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            color: Colors.blue,
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
         ),
         actions: [
           IconButton(
@@ -58,12 +108,19 @@ class _ExploreState extends State<MainScreen> {
             color: Colors.blue,
             tooltip: "Themes",
           ),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            color: Colors.blue,
+            tooltip: "Settings",
+            onPressed: () {},
+          ),
         ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Center(
+          Expanded(
+            flex: 1,
             child: SizedBox(
               width: 500,
               child: TextField(
@@ -79,33 +136,33 @@ class _ExploreState extends State<MainScreen> {
               ),
             ),
           ),
-          SizedBox(
-            height: 480,
-            child: GridView.builder(
-              itemCount: bookList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return BookItem(
-                    title: bookList[index].title,
-                    image: bookList[index].image,
-                    id: bookList[index].id);
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 5,
-                childAspectRatio: 5 / 3,
+          Expanded(
+            flex: 8,
+            child: SizedBox(
+              child: SingleChildScrollView(
+                child: Wrap(
+                  children: [
+                    for (var book in bookList)
+                      BookItem(
+                        title: book.title,
+                        image: book.image,
+                        id: book.id,
+                      )
+                  ],
+                ),
               ),
-              padding: const EdgeInsets.all(10),
-              shrinkWrap: true,
             ),
           ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: FileLoader(addBookToLibrary),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: FileLoader(addBookToLibrary),
+            ),
           ),
         ],
       ),
+      drawer: const Tabs(),
     );
   }
 }
