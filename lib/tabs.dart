@@ -5,24 +5,20 @@ import 'package:rars/tab_book.dart';
 import 'book.dart';
 
 class Tabs extends StatefulWidget {
-  const Tabs({Key? key}) : super(key: key);
+   final List<Book> tabListHere;
+  const Tabs(this.tabListHere, {Key? key}) : super(key: key);
 
   @override
   _TabsState createState() => _TabsState();
 }
 
 class _TabsState extends State<Tabs> {
+
+
   @override
   void initState() {
     super.initState();
     setState(() {});
-  }
-
-  void addTab(Book b) {
-    setState(() {
-      log('tab added');
-      const TabForBook();
-    });
   }
 
   @override
@@ -40,9 +36,8 @@ class _TabsState extends State<Tabs> {
             onPressed: () {
               Scaffold.of(context).openEndDrawer();
             }),
-          const TabForBook(),
-          const TabForBook(),
-          const TabForBook(),
+          for (var tab in widget.tabListHere)
+              TabForBook(title: tab.title)
         ]),
       ),
     );
