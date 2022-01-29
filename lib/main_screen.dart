@@ -116,7 +116,7 @@ class _ExploreState extends State<MainScreen> {
                   children: [
                     for (var book in bookList)
                       BookItem(
-                        addTabToListFinal,
+                        addTab: addTabToListFinal,
                         title: book.title,
                         image: book.image,
                         id: book.id,

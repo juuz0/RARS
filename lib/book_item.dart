@@ -8,8 +8,9 @@ class BookItem extends StatelessWidget {
   final int id;
   final Function addTab;
 
-  const BookItem(this.addTab,{
+  const BookItem({
     Key? key,
+    required this.addTab,
     required this.title,
     required this.image,
     required this.id,
