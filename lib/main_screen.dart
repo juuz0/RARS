@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:rars/tabs.dart';
@@ -15,15 +14,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _ExploreState extends State<MainScreen> {
-  List<Book> bookList = [
-    Book(id: 1, title: "abc",),
-    Book(id: 1, title: "abc",),
 
+  List<Book> bookList = [
+    Book(id: '1', title: "Sample Book 1",),
+    Book(id: '2', title: "Nikhil Goat",),
   ];
 
      List<Book> tabList = [
-    Book(id: 1, title: "abc",),
-    Book(id: 1, title: "abc",),
+    Book(id: '1', title: "abc",),
+    Book(id: '1', title: "abc",),
   ];
  
 
@@ -92,7 +91,7 @@ class _ExploreState extends State<MainScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            flex: 1,
+            flex: 2,
             child: SizedBox(
               width: 500,
               child: TextField(
@@ -109,7 +108,7 @@ class _ExploreState extends State<MainScreen> {
             ),
           ),
           Expanded(
-            flex: 8,
+            flex: 15,
             child: SizedBox(
               child: SingleChildScrollView(
                 child: Wrap(
@@ -129,7 +128,7 @@ class _ExploreState extends State<MainScreen> {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: 3,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: FileLoader(addBookToLibrary),

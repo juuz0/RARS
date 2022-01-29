@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 class Book {
-  final int id;
+  final String id;
   final String title;
   final Uint8List? image;
 
