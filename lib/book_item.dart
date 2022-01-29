@@ -1,24 +1,27 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:rars/book.dart';
 
 class BookItem extends StatelessWidget {
-  final String title;
-  final String image;
-  final int id;
+  final Book book;
   final Function addTab;
 
-  const BookItem({
+  BookItem({
     Key? key,
     required this.addTab,
-    required this.title,
-    required this.image,
-    required this.id,
+    required this.book,
   }) : super(key: key);
 
-  void addTabToList(Book b){
+  void addTabToList(Book b) {
     addTab(b);
   }
-    
+
+  final placeholderImage = Image.asset(
+    "assets/images/placeholder.png",
+    fit: BoxFit.contain,
+    width: 1000,
+  );
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,7 +32,8 @@ class BookItem extends StatelessWidget {
           height: 200,
           width: 300,
           child: GestureDetector(
-            onTap: ()=>addTabToList(Book(id: id, title: title, image: image)),
+            onTap: () => addTabToList(
+                Book(id: book.id, title: book.title, image: book.image)),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -38,9 +42,24 @@ class BookItem extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  Text(title),
-                  Text("`$id`"),
-                  Text(image),
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        book.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: (book.image != null)
+                        ? Image(image: MemoryImage(book.image as Uint8List))
+                        : placeholderImage,
+                  ),
                 ],
               ),
             ),

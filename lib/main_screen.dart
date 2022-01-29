@@ -14,15 +14,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _ExploreState extends State<MainScreen> {
-  List<Book> bookList = [
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
 
+  List<Book> bookList = [
+    Book(id: '1', title: "Sample Book 1",),
+    Book(id: '2', title: "Nikhil Goat",),
   ];
 
      List<Book> tabList = [
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
+    Book(id: '1', title: "abc",),
+    Book(id: '1', title: "abc",),
   ];
  
 
@@ -91,7 +91,7 @@ class _ExploreState extends State<MainScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
-            flex: 1,
+            flex: 2,
             child: SizedBox(
               width: 500,
               child: TextField(
@@ -108,17 +108,19 @@ class _ExploreState extends State<MainScreen> {
             ),
           ),
           Expanded(
-            flex: 8,
+            flex: 15,
             child: SizedBox(
               child: SingleChildScrollView(
                 child: Wrap(
                   children: [
-                    for (var book in bookList)
+                    for (var b in bookList)
                       BookItem(
                         addTab: addTabToListFinal,
-                        title: book.title,
-                        image: book.image,
-                        id: book.id,
+                        book: Book(
+                          id: b.id,
+                          image: b.image,
+                          title: b.title,
+                        ),
                       )
                   ],
                 ),
@@ -126,7 +128,7 @@ class _ExploreState extends State<MainScreen> {
             ),
           ),
           Expanded(
-            flex: 1,
+            flex: 3,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: FileLoader(addBookToLibrary),

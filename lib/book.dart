@@ -1,7 +1,13 @@
-class Book {
-  final int id;
-  final String title;
-  final String image;
+import 'dart:typed_data';
 
-  const Book({required this.id, required this.image, required this.title});
+class Book {
+  final String id;
+  final String title;
+  final Uint8List? image;
+
+  Book({
+    required this.id,
+    this.image,
+    required this.title,
+  });
 }
