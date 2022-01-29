@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rars/book.dart';
-import 'package:rars/tab_book.dart';
 
 class BookItem extends StatelessWidget {
   final String title;
