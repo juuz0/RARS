@@ -17,50 +17,14 @@ class _ExploreState extends State<MainScreen> {
   List<Book> bookList = [
     const Book(id: 1, title: "abc", image: "abc.com"),
     const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com")
+
   ];
+
+     List<Book> tabList = [
+    const Book(id: 1, title: "abc", image: "abc.com"),
+    const Book(id: 1, title: "abc", image: "abc.com"),
+  ];
+ 
 
   @override
   void initState() {
@@ -72,6 +36,13 @@ class _ExploreState extends State<MainScreen> {
     log("added book");
     setState(() {
       bookList.add(b);
+    });
+  }
+  
+  void addTabToListFinal(Book tab){
+    log("added tab to list uwu");
+    setState(() {
+      tabList.add(tab);
     });
   }
 
@@ -144,6 +115,7 @@ class _ExploreState extends State<MainScreen> {
                   children: [
                     for (var book in bookList)
                       BookItem(
+                        addTab: addTabToListFinal,
                         title: book.title,
                         image: book.image,
                         id: book.id,
@@ -162,7 +134,7 @@ class _ExploreState extends State<MainScreen> {
           ),
         ],
       ),
-      drawer: const Tabs(),
+      drawer: Tabs(tabList),
     );
   }
 }
