@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:developer';
 import 'book.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
 class FileLoader extends StatelessWidget {
   final Function addBook;
@@ -16,11 +17,16 @@ class FileLoader extends StatelessWidget {
     if (result != null) {
       PlatformFile file = result.files.first;
       log(file.name);
-      Book newB = Book(id: 1, image: "kekw", title: file.name);
-      
+      final pdf = await PdfDocument.openFile(file.path as String);
+      final page = await pdf.getPage(1);
+      final thumbnail = await page.render(width: 50, height: 50);
+      Book newB = Book(
+        id: 1,
+        image: thumbnail!.bytes,
+        title: file.name,
+      );
       log('added to list');
       addBook(newB);
-      
     } else {
       log('User cancelled');
     }

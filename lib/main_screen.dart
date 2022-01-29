@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:rars/tabs.dart';
@@ -15,14 +16,14 @@ class MainScreen extends StatefulWidget {
 
 class _ExploreState extends State<MainScreen> {
   List<Book> bookList = [
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
+    Book(id: 1, title: "abc",),
+    Book(id: 1, title: "abc",),
 
   ];
 
      List<Book> tabList = [
-    const Book(id: 1, title: "abc", image: "abc.com"),
-    const Book(id: 1, title: "abc", image: "abc.com"),
+    Book(id: 1, title: "abc",),
+    Book(id: 1, title: "abc",),
   ];
  
 
@@ -113,12 +114,14 @@ class _ExploreState extends State<MainScreen> {
               child: SingleChildScrollView(
                 child: Wrap(
                   children: [
-                    for (var book in bookList)
+                    for (var b in bookList)
                       BookItem(
                         addTab: addTabToListFinal,
-                        title: book.title,
-                        image: book.image,
-                        id: book.id,
+                        book: Book(
+                          id: b.id,
+                          image: b.image,
+                          title: b.title,
+                        ),
                       )
                   ],
                 ),

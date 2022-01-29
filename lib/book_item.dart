@@ -1,24 +1,22 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:rars/book.dart';
 
 class BookItem extends StatelessWidget {
-  final String title;
-  final String image;
-  final int id;
+  final Book book;
   final Function addTab;
 
   const BookItem({
     Key? key,
     required this.addTab,
-    required this.title,
-    required this.image,
-    required this.id,
+    required this.book,
   }) : super(key: key);
 
-  void addTabToList(Book b){
+  void addTabToList(Book b) {
     addTab(b);
   }
-    
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,7 +27,8 @@ class BookItem extends StatelessWidget {
           height: 200,
           width: 300,
           child: GestureDetector(
-            onTap: ()=>addTabToList(Book(id: id, title: title, image: image)),
+            onTap: () => addTabToList(
+                Book(id: book.id, title: book.title, image: book.image)),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
@@ -38,9 +37,11 @@ class BookItem extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  Text(title),
-                  Text("`$id`"),
-                  Text(image),
+                  Text(book.title),
+                  Text("`$book.id`"),
+                  Image(
+                    image: MemoryImage(book.image as Uint8List),
+                  ),
                 ],
               ),
             ),
