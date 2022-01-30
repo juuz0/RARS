@@ -27,6 +27,7 @@ class FileLoader extends StatelessWidget {
         id: pdf.id,
         image: thumbnail!.bytes,
         title: file.name,
+        path: file.path,
       );
       log('added to list');
       addBook(newB);

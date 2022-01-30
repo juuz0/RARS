@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:rars/tabs.dart';
+import 'package:rars/view_book.dart';
 import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
@@ -16,13 +17,13 @@ class MainScreen extends StatefulWidget {
 class _ExploreState extends State<MainScreen> {
 
   List<Book> bookList = [
-    Book(id: '1', title: "Sample Book 1",),
-    Book(id: '2', title: "Nikhil Goat",),
+    Book(id: '1', title: "Sample Book 1", path: "assests/images/sample.pdf"),
+    Book(id: '2', title: "Nikhil Goat", path: "assests/images/sample.pdf"),
   ];
 
      List<Book> tabList = [
-    Book(id: '1', title: "abc",),
-    Book(id: '1', title: "abc",),
+    Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
+    Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
   ];
  
 
@@ -43,6 +44,12 @@ class _ExploreState extends State<MainScreen> {
     log("added tab to list uwu");
     setState(() {
       tabList.add(tab);
+    });
+  }
+
+  void sendList(List<Book> tabL, Book b){
+    setState(() {
+      ViewBook(tabList,b);
     });
   }
 
@@ -119,8 +126,10 @@ class _ExploreState extends State<MainScreen> {
                         book: Book(
                           id: b.id,
                           image: b.image,
-                          title: b.title,
+                          title: b.title, 
+                          path: b.path,
                         ),
+                        tabListHere: tabList,
                       )
                   ],
                 ),
