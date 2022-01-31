@@ -103,10 +103,10 @@ class _ViewBookState extends State<ViewBook> {
                   onPressed: () {
                     if (isSampleDoc) {
                       _pdfController.loadDocument(
-                          PdfDocument.openAsset('assets/images/sample.pdf'));
+                          PdfDocument.openFile(widget.book.path as String));
                     } else {
                       _pdfController.loadDocument(
-                          PdfDocument.openAsset('assets/images/sample.pdf'));
+                          PdfDocument.openFile(widget.book.path as String));
                     }
                     isSampleDoc = !isSampleDoc;
                   },
@@ -115,49 +115,55 @@ class _ViewBookState extends State<ViewBook> {
             ),
           ),
           Expanded(
-            flex: 8,
-            child: SizedBox(
-              height: 2000,
-              width: 6000,
-              child: PdfView(
+            flex: 9,
+            child: Scrollbar(
+              child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
-                documentLoader:
-                    const Center(child: CircularProgressIndicator()),
-                pageLoader: const Center(child: CircularProgressIndicator()),
-                controller: _pdfController,
-                onDocumentLoaded: (document) {
-                  setState(() {
-                    _allPagesCount = document.pagesCount;
-                  });
-                },
-                onPageChanged: (page) {
-                  setState(() {
-                    _actualPageNumber = page;
-                  });
-                },
-                renderer: (PdfPage page) => page.render(
-                  width: page.width * 2,
-                  height: page.height * 2,
-                  format: PdfPageFormat.JPEG,
-                ),
-                pageBuilder: (
-                  Future<PdfPageImage> pageImage,
-                  int index,
-                  PdfDocument document,
-                ) =>
-                    PhotoViewGalleryPageOptions(
-                  imageProvider: PdfPageImageProvider(
-                    pageImage,
-                    index,
-                    document.id,
+                child: SizedBox(
+                  height: 1000,
+                  width: 1000,
+                    child: PdfView(
+                      // scrollDirection: Axis.vertical,
+                      documentLoader:
+                          const Center(child: CircularProgressIndicator()),
+                      pageLoader: const Center(child: CircularProgressIndicator()),
+                      controller: _pdfController,
+                      onDocumentLoaded: (document) {
+                        setState(() {
+                          _allPagesCount = document.pagesCount;
+                        });
+                      },
+                      onPageChanged: (page) {
+                        setState(() {
+                          _actualPageNumber = page;
+                        });
+                      },
+                      renderer: (PdfPage page) => page.render(
+                        width: page.width * 2,
+                        height: page.height * 2,
+                        format: PdfPageFormat.JPEG,
+                      ),
+                      pageBuilder: (
+                        Future<PdfPageImage> pageImage,
+                        int index,
+                        PdfDocument document,
+                      ) =>
+                          PhotoViewGalleryPageOptions(
+                        imageProvider: PdfPageImageProvider(
+                          pageImage,
+                          index,
+                          document.id,
+                        ),
+                        minScale: PhotoViewComputedScale.contained * 1.5,
+                        maxScale: PhotoViewComputedScale.contained * 4.0,
+                        initialScale: PhotoViewComputedScale.contained * 1.5,
+                      ),
+                    ),
                   ),
-                  minScale: PhotoViewComputedScale.contained * 1.5,
-                  maxScale: PhotoViewComputedScale.contained * 4.0,
-                  initialScale: PhotoViewComputedScale.contained * 1.5,
-                ),
               ),
             ),
-          ),
+            ),
+
         ],
       ),
       drawer: Tabs(widget.tabListHere),
