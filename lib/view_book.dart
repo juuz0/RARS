@@ -115,55 +115,54 @@ class _ViewBookState extends State<ViewBook> {
             ),
           ),
           Expanded(
-            flex: 9,
+            flex: 8,
             child: Scrollbar(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: SizedBox(
                   height: 1000,
                   width: 1000,
-                    child: PdfView(
-                      // scrollDirection: Axis.vertical,
-                      documentLoader:
-                          const Center(child: CircularProgressIndicator()),
-                      pageLoader: const Center(child: CircularProgressIndicator()),
-                      controller: _pdfController,
-                      onDocumentLoaded: (document) {
-                        setState(() {
-                          _allPagesCount = document.pagesCount;
-                        });
-                      },
-                      onPageChanged: (page) {
-                        setState(() {
-                          _actualPageNumber = page;
-                        });
-                      },
-                      renderer: (PdfPage page) => page.render(
-                        width: page.width * 2,
-                        height: page.height * 2,
-                        format: PdfPageFormat.JPEG,
+                  child: PdfView(
+                    documentLoader:
+                        const Center(child: CircularProgressIndicator()),
+                    pageLoader:
+                        const Center(child: CircularProgressIndicator()),
+                    controller: _pdfController,
+                    onDocumentLoaded: (document) {
+                      setState(() {
+                        _allPagesCount = document.pagesCount;
+                      });
+                    },
+                    onPageChanged: (page) {
+                      setState(() {
+                        _actualPageNumber = page;
+                      });
+                    },
+                    renderer: (PdfPage page) => page.render(
+                      width: page.width * 2,
+                      height: page.height * 2,
+                      format: PdfPageFormat.PNG,
+                    ),
+                    pageBuilder: (
+                      Future<PdfPageImage> pageImage,
+                      int index,
+                      PdfDocument document,
+                    ) =>
+                        PhotoViewGalleryPageOptions(
+                      imageProvider: PdfPageImageProvider(
+                        pageImage,
+                        index,
+                        document.id,
                       ),
-                      pageBuilder: (
-                        Future<PdfPageImage> pageImage,
-                        int index,
-                        PdfDocument document,
-                      ) =>
-                          PhotoViewGalleryPageOptions(
-                        imageProvider: PdfPageImageProvider(
-                          pageImage,
-                          index,
-                          document.id,
-                        ),
-                        minScale: PhotoViewComputedScale.contained * 1.5,
-                        maxScale: PhotoViewComputedScale.contained * 4.0,
-                        initialScale: PhotoViewComputedScale.contained * 1.5,
-                      ),
+                      minScale: PhotoViewComputedScale.contained * 1.1,
+                      maxScale: PhotoViewComputedScale.contained * 4.0,
+                      initialScale: PhotoViewComputedScale.contained * 1.1,
                     ),
                   ),
+                ),
               ),
             ),
-            ),
-
+          ),
         ],
       ),
       drawer: Tabs(widget.tabListHere),
