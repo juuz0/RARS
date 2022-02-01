@@ -5,6 +5,11 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class Manager {
+  /// Private function to get XML file
+  ///
+  /// It tries to get a file under rars/data.xml under User's documents directory
+  ///
+  /// If the file is not found, it creates one and returns that.
   Future<File> _getXml() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
@@ -19,6 +24,15 @@ class Manager {
     return xmlFile;
   }
 
+  /// (Async) Adds a book into library
+  ///
+  /// [title] for book path (String)
+  ///
+  /// [lastReadPage] for the last read page by user (int)
+  ///
+  /// [bookmarkedPages] list of pages bookmarked (List<int>)
+  ///
+  /// returns [true], if added, [false] if some error.
   Future<bool> addBookInLibrary(
       String title, int lastReadPage, List<int> bookmarkedPages) async {
     File xmlFile = await _getXml();
@@ -52,6 +66,15 @@ class Manager {
     return true;
   }
 
+  /// (Async) Updates an attribute of a book
+  ///
+  /// [path] - path of book
+  ///
+  /// [attribute] - attribute to change
+  ///
+  /// [value] - new value of [attribute]
+  ///
+  /// returns true if success.
   Future<bool> updateBook(String path, String attribute, dynamic value) async {
     try {
       int lastRead = await getBookAttribute(path, "lastRead");
@@ -81,6 +104,11 @@ class Manager {
     return false;
   }
 
+  /// (Async) Deletes a book from the library
+  ///
+  /// [path] - path of book to delete
+  ///
+  /// Returns true if success.
   Future<bool> deleteBook(String path) async {
     File xmlFile = await _getXml();
     String finalXml = '';
@@ -105,6 +133,9 @@ class Manager {
     return true;
   }
 
+  /// Helper function to build a book
+  ///
+  /// Returns an xml representation of a <book> element
   String _addBook(String path, int lastReadPage, List<int> bookmarkedPages) {
     XmlBuilder bb = XmlBuilder();
     bb.element('book', nest: () {
@@ -119,6 +150,13 @@ class Manager {
     return bb.buildDocument().toXmlString(pretty: true, indent: '\n');
   }
 
+  /// (Async) get the specified attribute of book
+  ///
+  /// [path] - path of book to identify it
+  ///
+  /// [attribute] - attribute to find
+  ///
+  /// Returns [String], [int], [List<int>] depending on the attribute
   dynamic getBookAttribute(String path, String attribute) async {
     File xmlFile = await _getXml();
     var document = XmlDocument.parse(xmlFile.readAsStringSync());
@@ -142,6 +180,8 @@ class Manager {
     }
   }
 
+  /// (Async) get paths of all books
+  /// Returns [List<String>] with path of all books
   Future<List<String>> getBooks() async {
     File xmlFile = await _getXml();
     var document = XmlDocument.parse(xmlFile.readAsStringSync());
