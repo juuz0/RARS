@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rars/tabs.dart';
 import 'package:rars/view_book.dart';
@@ -15,17 +14,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _ExploreState extends State<MainScreen> {
-
   List<Book> bookList = [
     Book(id: '1', title: "Sample Book 1", path: "assests/images/sample.pdf"),
     Book(id: '2', title: "Nikhil Goat", path: "assests/images/sample.pdf"),
   ];
 
-     List<Book> tabList = [
+  List<Book> tabList = [
     Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
     Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
   ];
- 
 
   @override
   void initState() {
@@ -33,23 +30,22 @@ class _ExploreState extends State<MainScreen> {
     setState(() {});
   }
 
-  void addBookToLibrary(Book b) {
-    log("added book");
+  void addBookToLibrary(Book b) async {
     setState(() {
       bookList.add(b);
     });
   }
-  
-  void addTabToListFinal(Book tab){
+
+  void addTabToListFinal(Book tab) {
     log("added tab to list uwu");
     setState(() {
       tabList.add(tab);
     });
   }
 
-  void sendList(List<Book> tabL, Book b){
+  void sendList(List<Book> tabL, Book b) {
     setState(() {
-      ViewBook(tabList,b);
+      ViewBook(tabList, b);
     });
   }
 
@@ -126,7 +122,7 @@ class _ExploreState extends State<MainScreen> {
                         book: Book(
                           id: b.id,
                           image: b.image,
-                          title: b.title, 
+                          title: b.title,
                           path: b.path,
                         ),
                         tabListHere: tabList,
