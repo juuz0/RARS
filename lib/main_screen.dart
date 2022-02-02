@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rars/tabs.dart';
 import 'package:rars/view_book.dart';
@@ -7,6 +6,7 @@ import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
 import 'tabs.dart';
+import 'manager.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -15,41 +15,38 @@ class MainScreen extends StatefulWidget {
 }
 
 class _ExploreState extends State<MainScreen> {
+  late Future<List<List<dynamic>>> bookList;
+  Manager man = Manager();
 
-  List<Book> bookList = [
-    Book(id: '1', title: "Sample Book 1", path: "assests/images/sample.pdf"),
-    Book(id: '2', title: "Nikhil Goat", path: "assests/images/sample.pdf"),
-  ];
-
-     List<Book> tabList = [
+  List<Book> tabList = [
     Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
     Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
   ];
- 
 
   @override
   void initState() {
     super.initState();
     setState(() {});
+    bookList = man.getBooks();
   }
 
-  void addBookToLibrary(Book b) {
-    log("added book");
+  void addBookToLibrary(Book b) async {
     setState(() {
-      bookList.add(b);
+      man.addBookInLibrary(b.title, b.path!, 1, []);
+      bookList = man.getBooks();
     });
   }
-  
-  void addTabToListFinal(Book tab){
+
+  void addTabToListFinal(Book tab) {
     log("added tab to list uwu");
     setState(() {
       tabList.add(tab);
     });
   }
 
-  void sendList(List<Book> tabL, Book b){
+  void sendList(List<Book> tabL, Book b) {
     setState(() {
-      ViewBook(tabList,b);
+      ViewBook(tabList, b);
     });
   }
 
@@ -116,24 +113,58 @@ class _ExploreState extends State<MainScreen> {
           ),
           Expanded(
             flex: 15,
-            child: SizedBox(
-              child: SingleChildScrollView(
-                child: Wrap(
-                  children: [
-                    for (var b in bookList)
-                      BookItem(
-                        addTab: addTabToListFinal,
-                        book: Book(
-                          id: b.id,
-                          image: b.image,
-                          title: b.title, 
-                          path: b.path,
+            child: FutureBuilder(
+              future: bookList,
+              builder: (BuildContext ctx,
+                  AsyncSnapshot<List<List<dynamic>>> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data![0].isNotEmpty) {
+                    return SizedBox(
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          children: [
+                            ...snapshot.data!.map((b) => BookItem(
+                                addTab: addTabToListFinal,
+                                book: Book(
+                                    id: 'id',
+                                    image: b[2],
+                                    title: b[0],
+                                    path: b[1]),
+                                tabListHere: tabList))
+                          ],
                         ),
-                        tabListHere: tabList,
-                      )
-                  ],
-                ),
-              ),
+                      ),
+                    );
+                  } else {
+                    return SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: Column(
+                        children: const [
+                          Text("Aw, No books have been added yet :/"),
+                          SizedBox(height: 10),
+                          Text("Tap the + icon to add some!")
+                        ],
+                      ),
+                    );
+                  }
+                }
+                return Center(
+                  child: SizedBox(
+                    width: 300,
+                    height: 300,
+                    child: Column(
+                      children: const [
+                        CircularProgressIndicator(),
+                        SizedBox(
+                          height: 10,
+                        ), // some space LOL
+                        Text("Hang on while I load the books :D")
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
