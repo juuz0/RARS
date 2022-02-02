@@ -61,7 +61,7 @@ class BookItem extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  SizedBox(height: 4,),
+                  const SizedBox(height: 4,),
                   Expanded(
                     flex: 15,
                     child: (book.image != null)
