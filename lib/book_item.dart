@@ -61,7 +61,9 @@ class BookItem extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  const SizedBox(height: 4,),
+                  const SizedBox(
+                    height: 4,
+                  ),
                   Expanded(
                     flex: 15,
                     child: (book.image != null)
@@ -73,20 +75,21 @@ class BookItem extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(7.0),
                       child: ListView(
-                          children: [Text(
+                        children: [
+                          Text(
                             book.title,
                             overflow: TextOverflow.fade,
                             maxLines: 3,
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                            ),textAlign: TextAlign.center
-                          ),],
-
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  
                 ],
               ),
             ),
