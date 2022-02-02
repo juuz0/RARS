@@ -61,23 +61,34 @@ class BookItem extends StatelessWidget {
               margin: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        book.title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 4,
                   ),
                   Expanded(
-                    flex: 8,
+                    flex: 15,
                     child: (book.image != null)
                         ? Image(image: MemoryImage(book.image as Uint8List))
                         : placeholderImage,
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: ListView(
+                        children: [
+                          Text(
+                            book.title,
+                            overflow: TextOverflow.fade,
+                            maxLines: 3,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
