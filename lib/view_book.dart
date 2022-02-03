@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
+import 'package:rars/bookmarks.dart';
 import 'package:rars/main_screen.dart';
 import 'package:rars/tabs.dart';
+import 'package:rars/manager.dart';
+
+Manager m = Manager();
 
 class ViewBook extends StatefulWidget {
   final List<Book> tabListHere;
@@ -14,25 +20,68 @@ class ViewBook extends StatefulWidget {
 }
 
 class _ViewBookState extends State<ViewBook> {
-  static const int _initialPage = 1;
-  int _actualPageNumber = _initialPage, _allPagesCount = 0;
+  int _allPagesCount = 0;
   bool isSampleDoc = true;
   late PdfController _pdfController;
+  dynamic _actualPageNumber = 1;
 
   @override
   void initState() {
+    _actualPageNumber = widget.book.lastPage;
+    log('$_actualPageNumber');
     _pdfController = PdfController(
-      // document: PdfDocument.openAsset('assets/images/sample.pdf'),
       document: PdfDocument.openFile(widget.book.path as String),
-      initialPage: _initialPage,
+      initialPage: _actualPageNumber,
     );
+    setState(() {});
     super.initState();
+  }
+
+  void _popupDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Book Mark Added!'),
+            content: Text('Book mark added on page $_actualPageNumber.'),
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Okay')),
+            ],
+          );
+        });
   }
 
   @override
   void dispose() {
     _pdfController.dispose();
     super.dispose();
+  }
+
+  void givePageNumberF(pageno, Book b) async {
+    setState(() {
+      log("page updated");
+      _actualPageNumber++;
+    });
+    log('$_actualPageNumber');
+  }
+
+  void givePageNumberB(pageno, Book b) async {
+    setState(() {
+      log("page updated");
+      _actualPageNumber--;
+    });
+
+    log('$_actualPageNumber');
+  }
+
+  void returnPageNo(int pageno, Book b) {
+    m.updateBook(b.title, b.path, b.image, "lastRead", pageno);
+  }
+
+  void resetInitPage(Book b) {
+    m.updateBook(b.title, b.path, b.image, "lastRead", _actualPageNumber);
   }
 
   @override
@@ -60,12 +109,32 @@ class _ViewBookState extends State<ViewBook> {
               ),
               actions: <Widget>[
                 IconButton(
+                  onPressed: () {
+                    log('${widget.book.bookmarkslist}');
+                    widget.book.bookmarkslist.add(_actualPageNumber);
+                    m.updateBook(
+                        widget.book.title,
+                        widget.book.path,
+                        widget.book.image,
+                        "bookmarks",
+                        widget.book.bookmarkslist);
+                    _popupDialog(context);
+                  },
+                  icon: const Icon(Icons.bookmark),
+                  color: Colors.blue,
+                ),
+                bookmarksList(widget.book, _pdfController),
+                IconButton(
                   icon: const Icon(Icons.navigate_before_outlined),
                   color: Colors.amber,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainScreen()),
-                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreen()),
+                    );
+                    resetInitPage(widget.book);
+                  },
                 ),
                 IconButton(
                   color: Colors.blue,
@@ -75,6 +144,7 @@ class _ViewBookState extends State<ViewBook> {
                       curve: Curves.ease,
                       duration: const Duration(milliseconds: 100),
                     );
+                    givePageNumberB(_actualPageNumber, widget.book);
                   },
                 ),
                 Container(
@@ -95,6 +165,7 @@ class _ViewBookState extends State<ViewBook> {
                       curve: Curves.ease,
                       duration: const Duration(milliseconds: 100),
                     );
+                    givePageNumberF(_actualPageNumber, widget.book);
                   },
                 ),
                 IconButton(

@@ -35,7 +35,7 @@ class Manager {
   /// `bookmarkedPages` list of pages bookmarked
   ///
   /// returns `true`, if added, `false` if some error.
-  Future<bool> addBookInLibrary(String title, String path, int lastReadPage,
+  Future<bool> addBookInLibrary(String title, String? path, int lastReadPage,
       List<int> bookmarkedPages) async {
     File xmlFile = await _getXml();
     var document = XmlDocument();
@@ -77,7 +77,7 @@ class Manager {
   /// `value` - new value of `attribute`
   ///
   /// returns true if success.
-  Future<bool> updateBook(String title, String path, Uint8List image,
+  Future<bool> updateBook(String title, String? path, Uint8List? image,
       String attribute, dynamic value) async {
     try {
       int lastRead = await getBookAttribute(path, "lastRead");
@@ -102,7 +102,7 @@ class Manager {
           }
       }
     } catch (e) {
-      log(e.toString());
+      log(e.toString() + 'Namita');
     }
     return false;
   }
@@ -111,8 +111,8 @@ class Manager {
   ///
   /// `path` - path of book to delete
   ///
-  /// Returns true if success.
-  Future<bool> deleteBook(String path) async {
+  /// Returns true if success.F
+  Future<bool> deleteBook(String? path) async {
     File xmlFile = await _getXml();
     String finalXml = '';
     XmlBuilder builder = XmlBuilder();
@@ -140,7 +140,7 @@ class Manager {
   ///
   /// Returns an xml representation of a <book> element
   String _addBook(
-      String title, String path, int lastReadPage, List<int> bookmarkedPages) {
+      String title, String? path, int lastReadPage, List<int> bookmarkedPages) {
     XmlBuilder bb = XmlBuilder();
     bb.element('book', nest: () {
       bb.element('title', nest: title);
@@ -162,7 +162,7 @@ class Manager {
   /// `attribute` - attribute to find
   ///
   /// Returns `String`, `int`, `List<int>` depending on the attribute
-  dynamic getBookAttribute(String path, String attribute) async {
+  dynamic getBookAttribute(String? path, String attribute) async {
     File xmlFile = await _getXml();
     var document = XmlDocument.parse(xmlFile.readAsStringSync());
     final element = document.findAllElements('book').where(
@@ -226,7 +226,7 @@ class Manager {
     return ls;
   }
 
-  Future<Uint8List> _getThumbnail(String path) async {
+  Future<Uint8List?> _getThumbnail(String path) async {
     final pdf = await PdfDocument.openFile(path);
     final page = await pdf.getPage(1);
     final thumbnail = await page.render(
