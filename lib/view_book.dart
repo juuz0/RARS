@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
+import 'package:rars/bookmarks.dart';
 import 'package:rars/main_screen.dart';
 import 'package:rars/tabs.dart';
+import 'package:rars/manager.dart';
+
+Manager m = Manager();
 
 class ViewBook extends StatefulWidget {
   final List<Book> tabListHere;
@@ -14,18 +20,23 @@ class ViewBook extends StatefulWidget {
 }
 
 class _ViewBookState extends State<ViewBook> {
-  static const int _initialPage = 1;
-  int _actualPageNumber = _initialPage, _allPagesCount = 0;
+  int _allPagesCount = 0;
   bool isSampleDoc = true;
+  late Set<int> bookmarks;
   late PdfController _pdfController;
+  dynamic _actualPageNumber = 1;
 
   @override
   void initState() {
+    _actualPageNumber = widget.book.lastPage;
+    log('$_actualPageNumber');
     _pdfController = PdfController(
-      // document: PdfDocument.openAsset('assets/images/sample.pdf'),
       document: PdfDocument.openFile(widget.book.path as String),
-      initialPage: _initialPage,
+      initialPage: _actualPageNumber,
     );
+    bookmarks = {...widget.book.bookmarkslist!};
+    log(bookmarks.toString());
+    setState(() {});
     super.initState();
   }
 
@@ -33,6 +44,43 @@ class _ViewBookState extends State<ViewBook> {
   void dispose() {
     _pdfController.dispose();
     super.dispose();
+  }
+
+  void givePageNumberF(pageno, Book b) async {
+    setState(() {
+      log("page updated");
+      _actualPageNumber++;
+    });
+    log('$_actualPageNumber');
+  }
+
+  void givePageNumberB(pageno, Book b) async {
+    setState(() {
+      log("page updated");
+      _actualPageNumber--;
+    });
+
+    log('$_actualPageNumber');
+  }
+
+  void returnPageNo(int pageno, Book b) {
+    m.updateBook(b.title, b.path, b.image, "lastRead", pageno);
+  }
+
+  void resetInitPage(Book b) {
+    m.updateBook(b.title, b.path, b.image, "lastRead", _actualPageNumber);
+  }
+
+  void updateBookmarks(int pageno) {
+    setState(() {
+      if (bookmarks.contains(pageno)) {
+        bookmarks.remove(pageno);
+      } else {
+        bookmarks.add(pageno);
+      }
+    });
+    m.updateBook(widget.book.title, widget.book.path, widget.book.image,
+        "bookmarks", bookmarks.toList());
   }
 
   @override
@@ -60,12 +108,26 @@ class _ViewBookState extends State<ViewBook> {
               ),
               actions: <Widget>[
                 IconButton(
+                  onPressed: () {
+                    updateBookmarks(_actualPageNumber);
+                  },
+                  icon: const Icon(Icons.bookmark),
+                  color: (bookmarks.contains(_actualPageNumber) == true
+                      ? Colors.red
+                      : Colors.blue),
+                ),
+                BookmarkList(bookmarks, _pdfController),
+                IconButton(
                   icon: const Icon(Icons.navigate_before_outlined),
                   color: Colors.amber,
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainScreen()),
-                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreen()),
+                    );
+                    resetInitPage(widget.book);
+                  },
                 ),
                 IconButton(
                   color: Colors.blue,
@@ -75,6 +137,7 @@ class _ViewBookState extends State<ViewBook> {
                       curve: Curves.ease,
                       duration: const Duration(milliseconds: 100),
                     );
+                    givePageNumberB(_actualPageNumber, widget.book);
                   },
                 ),
                 Container(
@@ -95,6 +158,7 @@ class _ViewBookState extends State<ViewBook> {
                       curve: Curves.ease,
                       duration: const Duration(milliseconds: 100),
                     );
+                    givePageNumberF(_actualPageNumber, widget.book);
                   },
                 ),
                 IconButton(

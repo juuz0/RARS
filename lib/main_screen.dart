@@ -126,10 +126,13 @@ class _ExploreState extends State<MainScreen> {
                             ...snapshot.data!.map((b) => BookItem(
                                 addTab: addTabToListFinal,
                                 book: Book(
-                                    id: 'id',
-                                    image: b[2],
-                                    title: b[0],
-                                    path: b[1]),
+                                  id: 'id',
+                                  image: b[2],
+                                  title: b[0],
+                                  path: b[1],
+                                  lastPage: b[3],
+                                  bookmarkslist: b[4],
+                                ),
                                 tabListHere: tabList))
                           ],
                         ),
