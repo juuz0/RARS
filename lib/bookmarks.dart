@@ -21,7 +21,6 @@ class _BookmarkListState extends State<BookmarkList> {
       height: 20.0,
       width: 120.0,
       child: ListView(
-        // This next line does the trick.
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           for (var key in widget.bookmarks)
