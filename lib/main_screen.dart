@@ -46,7 +46,7 @@ class _ExploreState extends State<MainScreen> {
 
   void sendList(List<Book> tabL, Book b) {
     setState(() {
-      ViewBook(tabList, b);
+      ViewBook(tabList, b, b.lastPage!);
     });
   }
 

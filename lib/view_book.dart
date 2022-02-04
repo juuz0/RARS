@@ -14,7 +14,8 @@ Manager m = Manager();
 class ViewBook extends StatefulWidget {
   final List<Book> tabListHere;
   final Book book;
-  const ViewBook(this.tabListHere, this.book, {Key? key}) : super(key: key);
+  final int pageStart; 
+  const ViewBook(this.tabListHere, this.book, this.pageStart, {Key? key}) : super(key: key);
 
   @override
   _ViewBookState createState() => _ViewBookState();
@@ -30,7 +31,7 @@ class _ViewBookState extends State<ViewBook> {
 
   @override
   void initState() {
-    _actualPageNumber = widget.book.lastPage;
+    _actualPageNumber = widget.pageStart;
     log('$_actualPageNumber');
     _pdfController = PdfController(
       document: PdfDocument.openFile(widget.book.path as String),
