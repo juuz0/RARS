@@ -22,6 +22,7 @@ class ViewBook extends StatefulWidget {
 class _ViewBookState extends State<ViewBook> {
   int _allPagesCount = 0;
   bool isSampleDoc = true;
+  late Set<int> bookmarks;
   late PdfController _pdfController;
   dynamic _actualPageNumber = 1;
 
@@ -33,24 +34,10 @@ class _ViewBookState extends State<ViewBook> {
       document: PdfDocument.openFile(widget.book.path as String),
       initialPage: _actualPageNumber,
     );
+    bookmarks = {...widget.book.bookmarkslist!};
+    log(bookmarks.toString());
     setState(() {});
     super.initState();
-  }
-
-  void _popupDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Book Mark Added!'),
-            content: Text('Book mark added on page $_actualPageNumber.'),
-            actions: <Widget>[
-              ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Okay')),
-            ],
-          );
-        });
   }
 
   @override
@@ -84,6 +71,18 @@ class _ViewBookState extends State<ViewBook> {
     m.updateBook(b.title, b.path, b.image, "lastRead", _actualPageNumber);
   }
 
+  void updateBookmarks(int pageno) {
+    setState(() {
+      if (bookmarks.contains(pageno)) {
+        bookmarks.remove(pageno);
+      } else {
+        bookmarks.add(pageno);
+      }
+    });
+    m.updateBook(widget.book.title, widget.book.path, widget.book.image,
+        "bookmarks", bookmarks.toList());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,20 +109,14 @@ class _ViewBookState extends State<ViewBook> {
               actions: <Widget>[
                 IconButton(
                   onPressed: () {
-                    log('${widget.book.bookmarkslist}');
-                    widget.book.bookmarkslist.add(_actualPageNumber);
-                    m.updateBook(
-                        widget.book.title,
-                        widget.book.path,
-                        widget.book.image,
-                        "bookmarks",
-                        widget.book.bookmarkslist);
-                    _popupDialog(context);
+                    updateBookmarks(_actualPageNumber);
                   },
                   icon: const Icon(Icons.bookmark),
-                  color: Colors.blue,
+                  color: (bookmarks.contains(_actualPageNumber) == true
+                      ? Colors.red
+                      : Colors.blue),
                 ),
-                bookmarksList(widget.book, _pdfController),
+                BookmarkList(bookmarks, _pdfController),
                 IconButton(
                   icon: const Icon(Icons.navigate_before_outlined),
                   color: Colors.amber,

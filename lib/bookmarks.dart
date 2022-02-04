@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/bookmark_item.dart';
-import 'book.dart';
 
-// ignore: camel_case_types
-class bookmarksList extends StatefulWidget {
-  final Book book;
+class BookmarkList extends StatefulWidget {
+  final Set<int> bookmarks;
   final PdfController pdfController;
-  const bookmarksList(this.book, this.pdfController, {Key? key})
+  const BookmarkList(this.bookmarks, this.pdfController, {Key? key})
       : super(key: key);
 
   @override
-  _bookmarksListState createState() => _bookmarksListState();
+  _BookmarkListState createState() => _BookmarkListState();
 }
 
-// ignore: camel_case_types
-class _bookmarksListState extends State<bookmarksList> {
+class _BookmarkListState extends State<BookmarkList> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,8 +24,8 @@ class _bookmarksListState extends State<bookmarksList> {
         // This next line does the trick.
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          for (var key in widget.book.bookmarkslist)
-            bookmarkItem(widget.book, key, widget.pdfController)
+          for (var key in widget.bookmarks)
+            BookmarkItem(key, widget.pdfController)
         ],
       ),
     );
