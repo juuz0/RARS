@@ -36,7 +36,7 @@ class Manager {
   ///
   /// returns `true`, if added, `false` if some error.
   Future<bool> addBookInLibrary(String title, String? path, int lastReadPage,
-      List<int> bookmarkedPages) async {
+      Set<int> bookmarkedPages) async {
     File xmlFile = await _getXml();
     var document = XmlDocument();
     final XmlBuilder builder = XmlBuilder();
@@ -81,7 +81,7 @@ class Manager {
       String attribute, dynamic value) async {
     try {
       int lastRead = await getBookAttribute(path, "lastRead");
-      List<int> bookmarks = await getBookAttribute(path, "bookmarks");
+      Set<int> bookmarks = await getBookAttribute(path, "bookmarks");
       bool a, b;
       switch (attribute) {
         case "lastRead":
@@ -140,7 +140,7 @@ class Manager {
   ///
   /// Returns an xml representation of a <book> element
   String _addBook(
-      String title, String? path, int lastReadPage, List<int> bookmarkedPages) {
+      String title, String? path, int lastReadPage, Set<int> bookmarkedPages) {
     XmlBuilder bb = XmlBuilder();
     bb.element('book', nest: () {
       bb.element('title', nest: title);
@@ -174,7 +174,7 @@ class Manager {
       case "lastRead":
         return int.parse(elem.text);
       case "bookmarks":
-        List<int> lis = [];
+        Set<int> lis = {};
         for (var e in elem.findElements('page')) {
           int tempNum = int.parse(e.firstChild.toString());
           lis.add(tempNum);

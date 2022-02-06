@@ -38,7 +38,7 @@ class _ViewBookState extends State<ViewBook> {
       document: PdfDocument.openFile(widget.book.path as String),
       initialPage: _actualPageNumber,
     );
-    bookmarks = {...widget.book.bookmarkslist!};
+    bookmarks = widget.book.bookmarkslist!;
     log(bookmarks.toString());
     setState(() {});
     super.initState();
@@ -85,7 +85,7 @@ class _ViewBookState extends State<ViewBook> {
       }
     });
     m.updateBook(widget.book.title, widget.book.path, widget.book.image,
-        "bookmarks", bookmarks.toList());
+        "bookmarks", bookmarks);
   }
 
   String color = "#FFFFFF";

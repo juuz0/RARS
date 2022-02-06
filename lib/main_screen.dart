@@ -32,7 +32,7 @@ class _ExploreState extends State<MainScreen> {
 
   void addBookToLibrary(Book b) async {
     setState(() {
-      man.addBookInLibrary(b.title, b.path!, 1, []);
+      man.addBookInLibrary(b.title, b.path!, 1, {});
       bookList = man.getBooks();
     });
   }
