@@ -6,7 +6,7 @@ class Book {
   final Uint8List? image;
   final String? path;
   final int? lastPage;
-  final List<int>? bookmarkslist;
+  final Set<int>? bookmarkslist;
 
   Book({
     required this.id,
