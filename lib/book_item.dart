@@ -27,7 +27,13 @@ class BookItem extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(book.title),
+            title: SizedBox(
+              width: 100,
+              child: Text(
+                book.title,
+                overflow: TextOverflow.fade,
+              ),
+            ),
             actions: <Widget>[
               ElevatedButton(
                   onPressed: () {
@@ -46,7 +52,6 @@ class BookItem extends StatelessWidget {
                           builder: (context) =>
                               ViewBook(tabListHere, book, book.lastPage!)),
                     );
-                   
                   },
                   child: const Text('Start from where you left off')),
             ],
@@ -73,7 +78,15 @@ class BookItem extends StatelessWidget {
             // onTap: () => addTabToList(
             //     Book(id: book.id, title: book.title, image: book.image)),
             onTap: () {
-              _popupDialog(context);
+              if (book.lastPage != 1) {
+                _popupDialog(context);
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ViewBook(tabListHere, book, 1)),
+                );
+              }
               addTabToList(Book(
                   id: book.id,
                   title: book.title,
