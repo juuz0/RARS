@@ -16,6 +16,7 @@ class MainScreen extends StatefulWidget {
 
 class _ExploreState extends State<MainScreen> {
   late Future<List<List<dynamic>>> bookList;
+  String filterKey = '';
   Manager man = Manager();
 
   List<Book> tabList = [
@@ -42,6 +43,18 @@ class _ExploreState extends State<MainScreen> {
     setState(() {
       tabList.add(tab);
     });
+  }
+
+  void updateSearchFilter(String key) {
+    setState(() {
+      filterKey = key;
+    });
+  }
+
+  bool checkFilter(String title) {
+    if (filterKey == '') return true;
+    if (title.toLowerCase().startsWith(filterKey.toLowerCase())) return true;
+    return false;
   }
 
   void sendList(List<Book> tabL, Book b) {
@@ -108,6 +121,7 @@ class _ExploreState extends State<MainScreen> {
                     hintStyle: const TextStyle(color: Colors.black54),
                     hintText: "Search the book in your book sheft",
                     fillColor: Colors.blue[50]),
+                onChanged: (key) => updateSearchFilter(key),
               ),
             ),
           ),
@@ -123,17 +137,22 @@ class _ExploreState extends State<MainScreen> {
                       child: SingleChildScrollView(
                         child: Wrap(
                           children: [
-                            ...snapshot.data!.map((b) => BookItem(
-                                addTab: addTabToListFinal,
-                                book: Book(
-                                  id: 'id',
-                                  image: b[2],
-                                  title: b[0],
-                                  path: b[1],
-                                  lastPage: b[3],
-                                  bookmarkslist: b[4],
-                                ),
-                                tabListHere: tabList))
+                            ...snapshot.data!.map((b) {
+                              if (checkFilter(b[0])) {
+                                return BookItem(
+                                    addTab: addTabToListFinal,
+                                    book: Book(
+                                      id: 'id',
+                                      image: b[2],
+                                      title: b[0],
+                                      path: b[1],
+                                      lastPage: b[3],
+                                      bookmarkslist: b[4],
+                                    ),
+                                    tabListHere: tabList);
+                              }
+                              return Container();
+                            })
                           ],
                         ),
                       ),

@@ -223,6 +223,7 @@ class Manager {
       ];
       ls.add(subLs);
     }
+    ls.sort((a, b) => a[0].toString().compareTo(b[0].toString()));
     return ls;
   }
 
