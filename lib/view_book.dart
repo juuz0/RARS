@@ -14,8 +14,9 @@ Manager m = Manager();
 class ViewBook extends StatefulWidget {
   final List<Book> tabListHere;
   final Book book;
-  final int pageStart; 
-  const ViewBook(this.tabListHere, this.book, this.pageStart, {Key? key}) : super(key: key);
+  final int pageStart;
+  const ViewBook(this.tabListHere, this.book, this.pageStart, {Key? key})
+      : super(key: key);
 
   @override
   _ViewBookState createState() => _ViewBookState();
@@ -88,35 +89,35 @@ class _ViewBookState extends State<ViewBook> {
   }
 
   String color = "#FFFFFF";
-  void changeColor(String col){
+  void changeColor(String col) {
     setState(() {
       color = col;
     });
   }
 
-    void _popupDialog(BuildContext context) {
+  void _popupDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             title: const Text('Jump to: '),
             content: TextField(
-                controller: myController,
-                decoration: InputDecoration(
-                    icon: const Icon(Icons.last_page),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                    filled: true,
-                    hintStyle: const TextStyle(color: Colors.black54),
-                    hintText: "Jump to page number",
-                    fillColor: Colors.blue[50]),
-              ),
+              controller: myController,
+              decoration: InputDecoration(
+                  icon: const Icon(Icons.last_page),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  filled: true,
+                  hintStyle: const TextStyle(color: Colors.black54),
+                  hintText: "Jump to page number",
+                  fillColor: Colors.blue[50]),
+            ),
             actions: <Widget>[
               ElevatedButton(
                   onPressed: () {
-                        _pdfController.jumpToPage(int.parse(myController.text));
-                        Navigator.of(context).pop();
+                    _pdfController.jumpToPage(int.parse(myController.text));
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Jump')),
             ],
@@ -140,9 +141,8 @@ class _ViewBookState extends State<ViewBook> {
               elevation: 0,
               leading: Row(
                 children: [
-
                   Expanded(
-                    flex:1,
+                    flex: 1,
                     child: Builder(
                       builder: (context) => IconButton(
                         icon: const Icon(Icons.menu),
@@ -156,17 +156,17 @@ class _ViewBookState extends State<ViewBook> {
                   Expanded(
                     flex: 1,
                     child: IconButton(
-                    icon: const Icon(Icons.navigate_before_outlined),
-                    color: Colors.amber,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MainScreen()),
-                      );
-                      resetInitPage(widget.book);
-                    },
-                                  ),
+                      icon: const Icon(Icons.navigate_before_outlined),
+                      color: Colors.amber,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MainScreen()),
+                        );
+                        resetInitPage(widget.book);
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -181,7 +181,9 @@ class _ViewBookState extends State<ViewBook> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10,),
+                const SizedBox(
+                  width: 10,
+                ),
                 IconButton(
                   onPressed: () {
                     updateBookmarks(_actualPageNumber);
@@ -192,11 +194,15 @@ class _ViewBookState extends State<ViewBook> {
                       : Colors.blue),
                 ),
                 BookmarkList(bookmarks, _pdfController),
-                const SizedBox(width: 5,),
-                IconButton(onPressed: ()=>_popupDialog(context), icon: const Icon(Icons.search),color: Colors.blue,),
+                const SizedBox(
+                  width: 5,
+                ),
+                IconButton(
+                  onPressed: () => _popupDialog(context),
+                  icon: const Icon(Icons.search),
+                  color: Colors.blue,
+                ),
                 ThemeList(changeColor),
-
-                
                 IconButton(
                   color: Colors.amber,
                   icon: const Icon(Icons.refresh),
@@ -224,11 +230,13 @@ class _ViewBookState extends State<ViewBook> {
                     color: Colors.blue,
                     icon: const Icon(Icons.navigate_before),
                     onPressed: () {
-                      _pdfController.previousPage(
-                        curve: Curves.ease,
-                        duration: const Duration(milliseconds: 100),
-                      );
-                      givePageNumberB(_actualPageNumber, widget.book);
+                      if (_actualPageNumber > 1) {
+                        _pdfController.previousPage(
+                          curve: Curves.ease,
+                          duration: const Duration(milliseconds: 100),
+                        );
+                        givePageNumberB(_actualPageNumber, widget.book);
+                      }
                     },
                   ),
                 ),
@@ -259,8 +267,8 @@ class _ViewBookState extends State<ViewBook> {
                           renderer: (PdfPage page) => page.render(
                             width: page.width * 2,
                             height: page.height * 2,
-                            format: PdfPageFormat.PNG, 
-                            backgroundColor: color,                           
+                            format: PdfPageFormat.PNG,
+                            backgroundColor: color,
                           ),
                           pageBuilder: (
                             Future<PdfPageImage> pageImage,
@@ -289,11 +297,13 @@ class _ViewBookState extends State<ViewBook> {
                     color: Colors.blue,
                     icon: const Icon(Icons.navigate_next),
                     onPressed: () {
-                      _pdfController.nextPage(
-                        curve: Curves.ease,
-                        duration: const Duration(milliseconds: 100),
-                      );
-                      givePageNumberF(_actualPageNumber, widget.book);
+                      if (_actualPageNumber != _allPagesCount) {
+                        _pdfController.nextPage(
+                          curve: Curves.ease,
+                          duration: const Duration(milliseconds: 100),
+                        );
+                         givePageNumberF(_actualPageNumber, widget.book);
+                      }
                     },
                   ),
                 ),
