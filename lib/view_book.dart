@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
 import 'package:rars/bookmarks.dart';
-import 'package:rars/main_screen.dart';
 import 'package:rars/tabs.dart';
 import 'package:rars/manager.dart';
 import 'package:rars/theme_list.dart';
@@ -15,7 +14,10 @@ class ViewBook extends StatefulWidget {
   final List<Book> tabListHere;
   final Book book;
   final int pageStart;
-  const ViewBook(this.tabListHere, this.book, this.pageStart, {Key? key})
+  final Function refreshLibrary;
+  const ViewBook(
+      this.tabListHere, this.book, this.pageStart, this.refreshLibrary,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -70,10 +72,12 @@ class _ViewBookState extends State<ViewBook> {
 
   void returnPageNo(int pageno, Book b) {
     m.updateBook(b.title, b.path, b.image, "lastRead", pageno);
+    widget.refreshLibrary();
   }
 
   void resetInitPage(Book b) {
     m.updateBook(b.title, b.path, b.image, "lastRead", _actualPageNumber);
+    widget.refreshLibrary();
   }
 
   void updateBookmarks(int pageno) {
@@ -86,6 +90,7 @@ class _ViewBookState extends State<ViewBook> {
     });
     m.updateBook(widget.book.title, widget.book.path, widget.book.image,
         "bookmarks", bookmarks);
+    widget.refreshLibrary();
   }
 
   String color = "#FFFFFF";
@@ -159,11 +164,7 @@ class _ViewBookState extends State<ViewBook> {
                       icon: const Icon(Icons.navigate_before_outlined),
                       color: Colors.amber,
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainScreen()),
-                        );
+                        Navigator.pop(context);
                         resetInitPage(widget.book);
                       },
                     ),
@@ -302,7 +303,7 @@ class _ViewBookState extends State<ViewBook> {
                           curve: Curves.ease,
                           duration: const Duration(milliseconds: 100),
                         );
-                         givePageNumberF(_actualPageNumber, widget.book);
+                        givePageNumberF(_actualPageNumber, widget.book);
                       }
                     },
                   ),

@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:rars/tabs.dart';
-import 'package:rars/view_book.dart';
 import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
@@ -57,9 +56,9 @@ class _ExploreState extends State<MainScreen> {
     return false;
   }
 
-  void sendList(List<Book> tabL, Book b) {
+  void refreshLibaryWithAttr() {
     setState(() {
-      ViewBook(tabList, b, b.lastPage!);
+      bookList = man.getBooks();
     });
   }
 
@@ -140,16 +139,18 @@ class _ExploreState extends State<MainScreen> {
                             ...snapshot.data!.map((b) {
                               if (checkFilter(b[0])) {
                                 return BookItem(
-                                    addTab: addTabToListFinal,
-                                    book: Book(
-                                      id: 'id',
-                                      image: b[2],
-                                      title: b[0],
-                                      path: b[1],
-                                      lastPage: b[3],
-                                      bookmarkslist: b[4],
-                                    ),
-                                    tabListHere: tabList);
+                                  addTab: addTabToListFinal,
+                                  book: Book(
+                                    id: 'id',
+                                    image: b[2],
+                                    title: b[0],
+                                    path: b[1],
+                                    lastPage: b[3],
+                                    bookmarkslist: b[4],
+                                  ),
+                                  tabListHere: tabList,
+                                  refreshLibrary: refreshLibaryWithAttr,
+                                );
                               }
                               return Container();
                             })
