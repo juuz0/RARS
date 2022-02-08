@@ -142,8 +142,9 @@ class _CustomTabsState extends State<CustomTabView>
       children: <Widget>[
         Container(
           alignment: Alignment.center,
+          color: Colors.white,
           child: TabBar(
-            isScrollable: true,
+            isScrollable: false,
             controller: controller,
             labelColor: Theme.of(context).primaryColor,
             unselectedLabelColor: Theme.of(context).hintColor,
