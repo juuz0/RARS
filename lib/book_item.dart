@@ -1,13 +1,15 @@
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
+import 'package:rars/tabs_dynamic.dart';
 import 'package:rars/view_book.dart';
 
 class BookItem extends StatelessWidget {
   final Book book;
   final Function addTab;
-  final List<Book> tabListHere;
+  final List<dynamic> tabListHere;
   final PdfController? pdfc;
   final Function refreshLibrary;
   BookItem(
@@ -19,7 +21,7 @@ class BookItem extends StatelessWidget {
       required this.refreshLibrary})
       : super(key: key);
 
-  void addTabToList(Book b) {
+  void addTabToList(dynamic b) {
     addTab(b);
   }
 
@@ -39,23 +41,26 @@ class BookItem extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ViewBook(tabListHere, book, 1, refreshLibrary)),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) =>
+                    //           ViewBook(tabListHere, book, 1, refreshLibrary)),
+                    // );
+                    TabsDynamic(tabListHere);
                   },
                   child: const Text('Start from beginning')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ViewBook(tabListHere, book,
-                              book.lastPage!, refreshLibrary)),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ViewBook(tabListHere, book,
+                    //           book.lastPage!, refreshLibrary)),
+                    // );
+                    TabsDynamic(tabListHere);
+                    log(tabListHere[1]);
                   },
                   child: const Text('Start from where you left off')),
             ],
@@ -85,18 +90,16 @@ class BookItem extends StatelessWidget {
               if (book.lastPage != 1) {
                 _popupDialog(context);
               } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ViewBook(tabListHere, book, 1, refreshLibrary)),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) =>
+                //           ViewBook(tabListHere, book, 1, refreshLibrary)),
+                // );
+                TabsDynamic(tabListHere);
+
               }
-              addTabToList(Book(
-                  id: book.id,
-                  title: book.title,
-                  image: book.image,
-                  path: book.path));
+              addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary));
             },
             child: Card(
               shape: RoundedRectangleBorder(

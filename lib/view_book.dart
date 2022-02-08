@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
 import 'package:rars/bookmarks.dart';
-import 'package:rars/tabs.dart';
 import 'package:rars/manager.dart';
 import 'package:rars/theme_list.dart';
 
 Manager m = Manager();
 
 class ViewBook extends StatefulWidget {
-  final List<Book> tabListHere;
+  final List<dynamic> tabListHere;
   final Book book;
   final int pageStart;
   final Function refreshLibrary;
@@ -146,22 +145,10 @@ class _ViewBookState extends State<ViewBook> {
               elevation: 0,
               leading: Row(
                 children: [
-                  Expanded(
-                    flex: 1,
-                    child: Builder(
-                      builder: (context) => IconButton(
-                        icon: const Icon(Icons.menu),
-                        color: Colors.blue,
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                    ),
-                  ),
-                  Expanded(
+                 Expanded(
                     flex: 1,
                     child: IconButton(
-                      icon: const Icon(Icons.navigate_before_outlined),
+                      icon: const Icon(Icons.close),
                       color: Colors.amber,
                       onPressed: () {
                         Navigator.pop(context);
@@ -313,7 +300,6 @@ class _ViewBookState extends State<ViewBook> {
           ),
         ],
       ),
-      drawer: Tabs(widget.tabListHere),
     );
   }
 }

@@ -1,14 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:rars/tabs.dart';
 import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
-import 'tabs.dart';
 import 'manager.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  late Function addToTabs;
+   MainScreen(this.addToTabs,{Key? key}) : super(key: key);
   @override
   _ExploreState createState() => _ExploreState();
 }
@@ -18,9 +17,8 @@ class _ExploreState extends State<MainScreen> {
   String filterKey = '';
   Manager man = Manager();
 
-  List<Book> tabList = [
-    Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
-    Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
+  List<dynamic> tabList = [
+
   ];
 
   @override
@@ -37,10 +35,10 @@ class _ExploreState extends State<MainScreen> {
     });
   }
 
-  void addTabToListFinal(Book tab) {
+  void addTabToListFinal(dynamic viewNew) {
     log("added tab to list uwu");
     setState(() {
-      tabList.add(tab);
+      tabList.add(viewNew);
     });
   }
 
@@ -67,7 +65,7 @@ class _ExploreState extends State<MainScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-      appBar: AppBar(
+          appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Text(
           "MY SHELF",
@@ -79,16 +77,7 @@ class _ExploreState extends State<MainScreen> {
         ),
         elevation: 0,
         centerTitle: true,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
-            color: Colors.blue,
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-        actions: [
+         actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.color_lens),
@@ -102,7 +91,7 @@ class _ExploreState extends State<MainScreen> {
             onPressed: () {},
           ),
         ],
-      ),
+          ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -138,8 +127,8 @@ class _ExploreState extends State<MainScreen> {
                           children: [
                             ...snapshot.data!.map((b) {
                               if (checkFilter(b[0])) {
-                                return BookItem(
-                                  addTab: addTabToListFinal,
+                                return BookItem(    
+                                  addTab: widget.addToTabs,
                                   book: Book(
                                     id: 'id',
                                     image: b[2],
@@ -199,7 +188,6 @@ class _ExploreState extends State<MainScreen> {
           ),
         ],
       ),
-      drawer: Tabs(tabList),
     );
   }
 }
