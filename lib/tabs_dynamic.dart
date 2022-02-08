@@ -17,12 +17,12 @@ import 'package:flutter/material.dart';
     int initPosition = 0;
 
     
-    Text titleText(int index){
+    String titleText(int index){
       if(index==0){
-        return Text("My Books");
+        return "My Books";
         }
       else{
-        return Text(widget.tabListHere[index]);
+        return widget.tabListHere[index].book.title;
       }
       }
 
@@ -33,7 +33,7 @@ import 'package:flutter/material.dart';
           child: CustomTabView(
             initPosition: initPosition,
             itemCount: widget.tabListHere.length,
-            tabBuilder: (context, index) => const Tab(text: "My Books"),
+            tabBuilder: (context, index) => Tab(text: titleText(index)),
             pageBuilder: (context, index) => widget.tabListHere[index],
             onPositionChange: (index){
               initPosition = index;
