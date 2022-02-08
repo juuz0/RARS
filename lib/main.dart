@@ -1,6 +1,6 @@
 import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:rars/book.dart';
 import 'package:rars/main_screen.dart';
 import 'package:rars/tabs_dynamic.dart';
 
@@ -17,11 +17,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<dynamic> TabList = [];
+  List<dynamic> TabList = [];
 
   @override
   void initState() {
-    TabList.add(MainScreen(_addToList));
+    TabList.add(MainScreen(_addToList, _closeTab, TabList));
     super.initState();
   }
 
@@ -30,6 +30,17 @@ class _MyAppState extends State<MyApp> {
       TabList.add(vb);
     });
     log("added added");
+  }
+
+  void _closeTab(int index) {
+    setState(() {
+      try {
+        TabList.removeAt(index);
+      } catch (e) {
+        TabList.removeLast();
+      }
+      log(TabList.toString());
+    });
   }
 
   // This widget is the root of your application.

@@ -6,8 +6,11 @@ import 'file_loader.dart';
 import 'manager.dart';
 
 class MainScreen extends StatefulWidget {
-  late Function addToTabs;
-   MainScreen(this.addToTabs,{Key? key}) : super(key: key);
+  final Function addToTabs;
+  final Function closeTab;
+  final List<dynamic> tabList;
+  const MainScreen(this.addToTabs, this.closeTab, this.tabList, {Key? key})
+      : super(key: key);
   @override
   _ExploreState createState() => _ExploreState();
 }
@@ -16,10 +19,6 @@ class _ExploreState extends State<MainScreen> {
   late Future<List<List<dynamic>>> bookList;
   String filterKey = '';
   Manager man = Manager();
-
-  List<dynamic> tabList = [
-
-  ];
 
   @override
   void initState() {
@@ -38,7 +37,7 @@ class _ExploreState extends State<MainScreen> {
   void addTabToListFinal(dynamic viewNew) {
     log("added tab to list uwu");
     setState(() {
-      tabList.add(viewNew);
+      widget.tabList.add(viewNew);
     });
   }
 
@@ -65,7 +64,7 @@ class _ExploreState extends State<MainScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
-          appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: const Text(
           "MY SHELF",
@@ -77,7 +76,7 @@ class _ExploreState extends State<MainScreen> {
         ),
         elevation: 0,
         centerTitle: true,
-         actions: [
+        actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.color_lens),
@@ -91,7 +90,7 @@ class _ExploreState extends State<MainScreen> {
             onPressed: () {},
           ),
         ],
-          ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -127,7 +126,7 @@ class _ExploreState extends State<MainScreen> {
                           children: [
                             ...snapshot.data!.map((b) {
                               if (checkFilter(b[0])) {
-                                return BookItem(    
+                                return BookItem(
                                   addTab: widget.addToTabs,
                                   book: Book(
                                     id: 'id',
@@ -137,8 +136,9 @@ class _ExploreState extends State<MainScreen> {
                                     lastPage: b[3],
                                     bookmarkslist: b[4],
                                   ),
-                                  tabListHere: tabList,
+                                  tabListHere: widget.tabList,
                                   refreshLibrary: refreshLibaryWithAttr,
+                                  closeTab: widget.closeTab,
                                 );
                               }
                               return Container();

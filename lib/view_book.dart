@@ -14,8 +14,10 @@ class ViewBook extends StatefulWidget {
   final Book book;
   final int pageStart;
   final Function refreshLibrary;
-  const ViewBook(
-      this.tabListHere, this.book, this.pageStart, this.refreshLibrary,
+  final int index;
+  final Function closeTab;
+  const ViewBook(this.tabListHere, this.book, this.pageStart,
+      this.refreshLibrary, this.index, this.closeTab,
       {Key? key})
       : super(key: key);
 
@@ -145,13 +147,13 @@ class _ViewBookState extends State<ViewBook> {
               elevation: 0,
               leading: Row(
                 children: [
-                 Expanded(
+                  Expanded(
                     flex: 1,
                     child: IconButton(
                       icon: const Icon(Icons.close),
                       color: Colors.amber,
                       onPressed: () {
-                        Navigator.pop(context);
+                        widget.closeTab(widget.index);
                         resetInitPage(widget.book);
                       },
                     ),

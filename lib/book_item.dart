@@ -12,14 +12,16 @@ class BookItem extends StatelessWidget {
   final List<dynamic> tabListHere;
   final PdfController? pdfc;
   final Function refreshLibrary;
-  BookItem(
-      {Key? key,
-      required this.addTab,
-      required this.book,
-      required this.tabListHere,
-      this.pdfc,
-      required this.refreshLibrary})
-      : super(key: key);
+  final Function closeTab;
+  BookItem({
+    Key? key,
+    required this.addTab,
+    required this.book,
+    required this.tabListHere,
+    this.pdfc,
+    required this.refreshLibrary,
+    required this.closeTab,
+  }) : super(key: key);
 
   void addTabToList(dynamic b) {
     addTab(b);
@@ -40,8 +42,11 @@ class BookItem extends StatelessWidget {
             actions: <Widget>[
               ElevatedButton(
                   onPressed: () {
+                    log(tabListHere.length.toString());
+
                     Navigator.pop(dialogContext);
-                    addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary));                   
+                    addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
+                        tabListHere.length, closeTab));
 
                     TabsDynamic(tabListHere);
                   },
@@ -49,7 +54,9 @@ class BookItem extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    addTabToList(ViewBook(tabListHere, book, book.lastPage!, refreshLibrary));
+                    log(tabListHere.length.toString());
+                    addTabToList(ViewBook(tabListHere, book, book.lastPage!,
+                        refreshLibrary, tabListHere.length, closeTab));
                     TabsDynamic(tabListHere);
                     log(tabListHere[1]);
                   },
@@ -81,11 +88,12 @@ class BookItem extends StatelessWidget {
               if (book.lastPage != 1) {
                 _popupDialog(context);
               } else {
-                addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary));
+                log(tabListHere.length.toString());
+
+                addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
+                    tabListHere.length, closeTab));
                 TabsDynamic(tabListHere);
-                
               }
-              
             },
             child: Card(
               shape: RoundedRectangleBorder(
