@@ -41,24 +41,15 @@ class BookItem extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) =>
-                    //           ViewBook(tabListHere, book, 1, refreshLibrary)),
-                    // );
+                    addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary));                   
+
                     TabsDynamic(tabListHere);
                   },
                   child: const Text('Start from beginning')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => ViewBook(tabListHere, book,
-                    //           book.lastPage!, refreshLibrary)),
-                    // );
+                    addTabToList(ViewBook(tabListHere, book, book.lastPage!, refreshLibrary));
                     TabsDynamic(tabListHere);
                     log(tabListHere[1]);
                   },
@@ -90,16 +81,11 @@ class BookItem extends StatelessWidget {
               if (book.lastPage != 1) {
                 _popupDialog(context);
               } else {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) =>
-                //           ViewBook(tabListHere, book, 1, refreshLibrary)),
-                // );
+                addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary));
                 TabsDynamic(tabListHere);
-
+                
               }
-              addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary));
+              
             },
             child: Card(
               shape: RoundedRectangleBorder(
