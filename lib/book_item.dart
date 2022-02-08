@@ -9,14 +9,15 @@ class BookItem extends StatelessWidget {
   final Function addTab;
   final List<Book> tabListHere;
   final PdfController? pdfc;
-
-  BookItem({
-    Key? key,
-    required this.addTab,
-    required this.book,
-    required this.tabListHere,
-    this.pdfc,
-  }) : super(key: key);
+  final Function refreshLibrary;
+  BookItem(
+      {Key? key,
+      required this.addTab,
+      required this.book,
+      required this.tabListHere,
+      this.pdfc,
+      required this.refreshLibrary})
+      : super(key: key);
 
   void addTabToList(Book b) {
     addTab(b);
@@ -25,7 +26,7 @@ class BookItem extends StatelessWidget {
   void _popupDialog(BuildContext context) async {
     showDialog(
         context: context,
-        builder: (context) {
+        builder: (dialogContext) {
           return AlertDialog(
             title: SizedBox(
               width: 100,
@@ -37,20 +38,23 @@ class BookItem extends StatelessWidget {
             actions: <Widget>[
               ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(dialogContext);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ViewBook(tabListHere, book, 1)),
+                          builder: (context) =>
+                              ViewBook(tabListHere, book, 1, refreshLibrary)),
                     );
                   },
                   child: const Text('Start from beginning')),
               ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(dialogContext);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              ViewBook(tabListHere, book, book.lastPage!)),
+                          builder: (context) => ViewBook(tabListHere, book,
+                              book.lastPage!, refreshLibrary)),
                     );
                   },
                   child: const Text('Start from where you left off')),
@@ -84,7 +88,8 @@ class BookItem extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ViewBook(tabListHere, book, 1)),
+                      builder: (context) =>
+                          ViewBook(tabListHere, book, 1, refreshLibrary)),
                 );
               }
               addTabToList(Book(
