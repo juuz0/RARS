@@ -39,6 +39,11 @@ dependencies:
   native_pdf_renderer: ^4.0.0
   path_provider: ^2.0.8
   xml: ^5.3.1
+  window_size:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: 7812516a5c1fc8ef379e244106953a2b534432b9
   
 dev_dependencies:
   flutter_test:

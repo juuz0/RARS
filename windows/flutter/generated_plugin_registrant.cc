@@ -7,8 +7,11 @@
 #include "generated_plugin_registrant.h"
 
 #include <native_pdf_renderer/native_pdf_renderer_plugin.h>
+#include <window_size/window_size_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   NativePdfRendererPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("NativePdfRendererPlugin"));
+  WindowSizePluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("WindowSizePlugin"));
 }

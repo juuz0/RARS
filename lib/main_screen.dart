@@ -90,7 +90,7 @@ class _ExploreState extends State<MainScreen> {
                     ),
                     filled: true,
                     hintStyle: const TextStyle(color: Colors.black54),
-                    hintText: "Search the book in your book sheft",
+                    hintText: "Search the book in the book shelf",
                     fillColor: Colors.blue[50]),
                 onChanged: (key) => updateSearchFilter(key),
               ),
@@ -137,7 +137,7 @@ class _ExploreState extends State<MainScreen> {
                       height: 300,
                       child: Column(
                         children: const [
-                          Text("Aw, No books have been added yet :/"),
+                          Text("No books have been added yet!"),
                           SizedBox(height: 10),
                           Text("Tap the + icon to add some!")
                         ],
@@ -155,7 +155,7 @@ class _ExploreState extends State<MainScreen> {
                         SizedBox(
                           height: 10,
                         ), // some space LOL
-                        Text("Hang on while I load the books :D")
+                        Text("Hang on while the books are loading!"),
                       ],
                     ),
                   ),

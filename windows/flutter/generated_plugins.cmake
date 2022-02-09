@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   native_pdf_renderer
+  window_size
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
