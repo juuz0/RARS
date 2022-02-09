@@ -52,6 +52,12 @@ GPL3
   ![Mark1](./bookmark1.png)
   ![Mark2](./bookmark2.png)
 
+- Where to start reading the book from? 
+
+  ![pop](./popup.png)
+
+
+
 - Jump to a page
     
    ![Mark1](./jump1.png)
