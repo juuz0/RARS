@@ -93,6 +93,9 @@ class _ViewBookState extends State<ViewBook> {
   void changeColor(String col) {
     setState(() {
       color = col;
+      _pdfController.loadDocument(
+          PdfDocument.openFile(widget.book.path as String),
+          initialPage: _actualPageNumber);
     });
   }
 
