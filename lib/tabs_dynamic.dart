@@ -12,7 +12,7 @@ class _TabsDynamicState extends State<TabsDynamic> {
 
   String titleText(int index) {
     if (index == 0) {
-      return "My Books";
+      return "My Shelf";
     } else {
       return widget.tabListHere[index].book.title;
     }

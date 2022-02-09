@@ -1,9 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:rars/main_screen.dart';
 import 'package:rars/tabs_dynamic.dart';
+import 'package:window_size/window_size.dart';
 
 dynamic viewbook;
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    setWindowTitle('RARS');
+  }
   runApp(const MyApp());
 }
 
