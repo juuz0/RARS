@@ -58,12 +58,14 @@ class _ViewBookState extends State<ViewBook> {
   void givePageNumberF(pageno, Book b) async {
     setState(() {
       _actualPageNumber++;
+      resetInitPage(widget.book);
     });
   }
 
   void givePageNumberB(pageno, Book b) async {
     setState(() {
       _actualPageNumber--;
+      resetInitPage(widget.book);
     });
   }
 
@@ -249,6 +251,7 @@ class _ViewBookState extends State<ViewBook> {
                           },
                           onPageChanged: (page) {
                             setState(() {
+                              resetInitPage(widget.book);
                               _actualPageNumber = page;
                             });
                           },
