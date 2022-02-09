@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -41,8 +40,6 @@ class BookItem extends StatelessWidget {
             actions: <Widget>[
               ElevatedButton(
                   onPressed: () {
-                    log(tabListHere.length.toString());
-
                     Navigator.pop(dialogContext);
                     addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
                         tabListHere.length, closeTab));
@@ -51,10 +48,8 @@ class BookItem extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    log(tabListHere.length.toString());
                     addTabToList(ViewBook(tabListHere, book, book.lastPage!,
                         refreshLibrary, tabListHere.length, closeTab));
-                    log(tabListHere[1]);
                   },
                   child: const Text('Start from where you left off')),
             ],
@@ -84,8 +79,6 @@ class BookItem extends StatelessWidget {
               if (book.lastPage != 1) {
                 _popupDialog(context);
               } else {
-                log(tabListHere.length.toString());
-
                 addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
                     tabListHere.length, closeTab));
               }

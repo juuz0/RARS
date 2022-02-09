@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'book_item.dart';
 import 'book.dart';
@@ -35,7 +34,6 @@ class _ExploreState extends State<MainScreen> {
   }
 
   void addTabToListFinal(dynamic viewNew) {
-    log("added tab to list uwu");
     setState(() {
       widget.tabList.add(viewNew);
     });

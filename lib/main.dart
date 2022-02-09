@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rars/main_screen.dart';
 import 'package:rars/tabs_dynamic.dart';
@@ -29,7 +27,6 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       tabList.add(vb);
     });
-    log("added added");
   }
 
   void _closeTab(int index) {
@@ -39,7 +36,6 @@ class _MyAppState extends State<MyApp> {
     //   } catch (e) {
     //     tabList.removeLast();
     //   }
-    //   log(tabList.toString());
     // });
   }
 

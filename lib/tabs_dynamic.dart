@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 class TabsDynamic extends StatefulWidget {
@@ -37,7 +35,7 @@ class _TabsDynamicState extends State<TabsDynamic> {
           onPositionChange: (index) {
             initPosition = index;
           },
-          onScroll: (position) => log('$position'),
+          onScroll: (position) {},
         ),
       ),
     );

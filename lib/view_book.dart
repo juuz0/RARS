@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
@@ -41,13 +39,11 @@ class _ViewBookState extends State<ViewBook> {
   @override
   void initState() {
     _actualPageNumber = widget.pageStart;
-    log('$_actualPageNumber');
     _pdfController = PdfController(
       document: PdfDocument.openFile(widget.book.path as String),
       initialPage: _actualPageNumber,
     );
     bookmarks = widget.book.bookmarkslist!;
-    log(bookmarks.toString());
     setState(() {});
     super.initState();
   }
@@ -61,19 +57,14 @@ class _ViewBookState extends State<ViewBook> {
 
   void givePageNumberF(pageno, Book b) async {
     setState(() {
-      log("page updated");
       _actualPageNumber++;
     });
-    log('$_actualPageNumber');
   }
 
   void givePageNumberB(pageno, Book b) async {
     setState(() {
-      log("page updated");
       _actualPageNumber--;
     });
-
-    log('$_actualPageNumber');
   }
 
   void returnPageNo(int pageno, Book b) {
