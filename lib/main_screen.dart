@@ -74,20 +74,6 @@ class _ExploreState extends State<MainScreen> {
         ),
         elevation: 0,
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.color_lens),
-            color: Colors.blue,
-            tooltip: "Themes",
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            color: Colors.blue,
-            tooltip: "Settings",
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
