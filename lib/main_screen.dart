@@ -1,14 +1,15 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:rars/tabs.dart';
 import 'book_item.dart';
 import 'book.dart';
 import 'file_loader.dart';
-import 'tabs.dart';
 import 'manager.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  final Function addToTabs;
+  final Function closeTab;
+  final List<dynamic> tabList;
+  const MainScreen(this.addToTabs, this.closeTab, this.tabList, {Key? key})
+      : super(key: key);
   @override
   _ExploreState createState() => _ExploreState();
 }
@@ -17,11 +18,6 @@ class _ExploreState extends State<MainScreen> {
   late Future<List<List<dynamic>>> bookList;
   String filterKey = '';
   Manager man = Manager();
-
-  List<Book> tabList = [
-    Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
-    Book(id: '1', title: "abc", path: "assests/images/sample.pdf"),
-  ];
 
   @override
   void initState() {
@@ -37,10 +33,9 @@ class _ExploreState extends State<MainScreen> {
     });
   }
 
-  void addTabToListFinal(Book tab) {
-    log("added tab to list uwu");
+  void addTabToListFinal(dynamic viewNew) {
     setState(() {
-      tabList.add(tab);
+      widget.tabList.add(viewNew);
     });
   }
 
@@ -79,29 +74,6 @@ class _ExploreState extends State<MainScreen> {
         ),
         elevation: 0,
         centerTitle: true,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
-            color: Colors.blue,
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.color_lens),
-            color: Colors.blue,
-            tooltip: "Themes",
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            color: Colors.blue,
-            tooltip: "Settings",
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -139,7 +111,7 @@ class _ExploreState extends State<MainScreen> {
                             ...snapshot.data!.map((b) {
                               if (checkFilter(b[0])) {
                                 return BookItem(
-                                  addTab: addTabToListFinal,
+                                  addTab: widget.addToTabs,
                                   book: Book(
                                     id: 'id',
                                     image: b[2],
@@ -148,8 +120,9 @@ class _ExploreState extends State<MainScreen> {
                                     lastPage: b[3],
                                     bookmarkslist: b[4],
                                   ),
-                                  tabListHere: tabList,
+                                  tabListHere: widget.tabList,
                                   refreshLibrary: refreshLibaryWithAttr,
+                                  closeTab: widget.closeTab,
                                 );
                               }
                               return Container();
@@ -199,7 +172,6 @@ class _ExploreState extends State<MainScreen> {
           ),
         ],
       ),
-      drawer: Tabs(tabList),
     );
   }
 }

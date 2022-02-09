@@ -61,7 +61,6 @@ class Manager {
       document = builder.buildDocument();
       finalXml += document.toXmlString(pretty: true, indent: '\t');
     } catch (e) {
-      log(e.toString());
       return false;
     }
     xmlFile.writeAsStringSync(finalXml);
@@ -102,7 +101,7 @@ class Manager {
           }
       }
     } catch (e) {
-      log(e.toString() + 'Namita');
+      log(e.toString());
     }
     return false;
   }
@@ -130,7 +129,6 @@ class Manager {
       xmlFile.writeAsStringSync(
           builder.buildDocument().toXmlString(pretty: true, indent: '\t'));
     } catch (e) {
-      log(e.toString());
       return false;
     }
     return true;

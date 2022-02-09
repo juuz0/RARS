@@ -7,19 +7,21 @@ import 'package:rars/view_book.dart';
 class BookItem extends StatelessWidget {
   final Book book;
   final Function addTab;
-  final List<Book> tabListHere;
+  final List<dynamic> tabListHere;
   final PdfController? pdfc;
   final Function refreshLibrary;
-  BookItem(
-      {Key? key,
-      required this.addTab,
-      required this.book,
-      required this.tabListHere,
-      this.pdfc,
-      required this.refreshLibrary})
-      : super(key: key);
+  final Function closeTab;
+  BookItem({
+    Key? key,
+    required this.addTab,
+    required this.book,
+    required this.tabListHere,
+    this.pdfc,
+    required this.refreshLibrary,
+    required this.closeTab,
+  }) : super(key: key);
 
-  void addTabToList(Book b) {
+  void addTabToList(dynamic b) {
     addTab(b);
   }
 
@@ -39,23 +41,15 @@ class BookItem extends StatelessWidget {
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              ViewBook(tabListHere, book, 1, refreshLibrary)),
-                    );
+                    addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
+                        tabListHere.length, closeTab));
                   },
                   child: const Text('Start from beginning')),
               ElevatedButton(
                   onPressed: () {
                     Navigator.pop(dialogContext);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ViewBook(tabListHere, book,
-                              book.lastPage!, refreshLibrary)),
-                    );
+                    addTabToList(ViewBook(tabListHere, book, book.lastPage!,
+                        refreshLibrary, tabListHere.length, closeTab));
                   },
                   child: const Text('Start from where you left off')),
             ],
@@ -85,18 +79,9 @@ class BookItem extends StatelessWidget {
               if (book.lastPage != 1) {
                 _popupDialog(context);
               } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          ViewBook(tabListHere, book, 1, refreshLibrary)),
-                );
+                addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
+                    tabListHere.length, closeTab));
               }
-              addTabToList(Book(
-                  id: book.id,
-                  title: book.title,
-                  image: book.image,
-                  path: book.path));
             },
             child: Card(
               shape: RoundedRectangleBorder(

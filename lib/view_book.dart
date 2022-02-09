@@ -1,22 +1,26 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
 import 'package:rars/bookmarks.dart';
-import 'package:rars/tabs.dart';
 import 'package:rars/manager.dart';
 import 'package:rars/theme_list.dart';
 
 Manager m = Manager();
 
 class ViewBook extends StatefulWidget {
-  final List<Book> tabListHere;
+  final List<dynamic> tabListHere;
   final Book book;
   final int pageStart;
   final Function refreshLibrary;
-  const ViewBook(
-      this.tabListHere, this.book, this.pageStart, this.refreshLibrary,
+  final int index;
+  final Function closeTab;
+
+  String get title {
+    return book.title;
+  }
+
+  const ViewBook(this.tabListHere, this.book, this.pageStart,
+      this.refreshLibrary, this.index, this.closeTab,
       {Key? key})
       : super(key: key);
 
@@ -35,13 +39,11 @@ class _ViewBookState extends State<ViewBook> {
   @override
   void initState() {
     _actualPageNumber = widget.pageStart;
-    log('$_actualPageNumber');
     _pdfController = PdfController(
       document: PdfDocument.openFile(widget.book.path as String),
       initialPage: _actualPageNumber,
     );
     bookmarks = widget.book.bookmarkslist!;
-    log(bookmarks.toString());
     setState(() {});
     super.initState();
   }
@@ -55,19 +57,14 @@ class _ViewBookState extends State<ViewBook> {
 
   void givePageNumberF(pageno, Book b) async {
     setState(() {
-      log("page updated");
       _actualPageNumber++;
     });
-    log('$_actualPageNumber');
   }
 
   void givePageNumberB(pageno, Book b) async {
     setState(() {
-      log("page updated");
       _actualPageNumber--;
     });
-
-    log('$_actualPageNumber');
   }
 
   void returnPageNo(int pageno, Book b) {
@@ -77,7 +74,6 @@ class _ViewBookState extends State<ViewBook> {
 
   void resetInitPage(Book b) {
     m.updateBook(b.title, b.path, b.image, "lastRead", _actualPageNumber);
-    widget.refreshLibrary();
   }
 
   void updateBookmarks(int pageno) {
@@ -97,6 +93,9 @@ class _ViewBookState extends State<ViewBook> {
   void changeColor(String col) {
     setState(() {
       color = col;
+      _pdfController.loadDocument(
+          PdfDocument.openFile(widget.book.path as String),
+          initialPage: _actualPageNumber);
     });
   }
 
@@ -144,33 +143,21 @@ class _ViewBookState extends State<ViewBook> {
               ),
               backgroundColor: Colors.transparent,
               elevation: 0,
-              leading: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Builder(
-                      builder: (context) => IconButton(
-                        icon: const Icon(Icons.menu),
-                        color: Colors.blue,
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      icon: const Icon(Icons.navigate_before_outlined),
-                      color: Colors.amber,
-                      onPressed: () {
-                        Navigator.pop(context);
-                        resetInitPage(widget.book);
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              // leading: Row(
+              //   children: [
+              //     Expanded(
+              //       flex: 1,
+              //       child: IconButton(
+              //         icon: const Icon(Icons.close),
+              //         color: Colors.amber,
+              //         onPressed: () {
+              //           widget.closeTab(widget.index);
+              //           resetInitPage(widget.book);
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
               actions: <Widget>[
                 Container(
                   alignment: Alignment.center,
@@ -313,7 +300,6 @@ class _ViewBookState extends State<ViewBook> {
           ),
         ],
       ),
-      drawer: Tabs(widget.tabListHere),
     );
   }
 }
