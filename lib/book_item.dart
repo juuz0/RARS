@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:rars/book.dart';
-import 'package:rars/tabs_dynamic.dart';
 import 'package:rars/view_book.dart';
 
 class BookItem extends StatelessWidget {
@@ -47,8 +46,6 @@ class BookItem extends StatelessWidget {
                     Navigator.pop(dialogContext);
                     addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
                         tabListHere.length, closeTab));
-
-                    TabsDynamic(tabListHere);
                   },
                   child: const Text('Start from beginning')),
               ElevatedButton(
@@ -57,7 +54,6 @@ class BookItem extends StatelessWidget {
                     log(tabListHere.length.toString());
                     addTabToList(ViewBook(tabListHere, book, book.lastPage!,
                         refreshLibrary, tabListHere.length, closeTab));
-                    TabsDynamic(tabListHere);
                     log(tabListHere[1]);
                   },
                   child: const Text('Start from where you left off')),
@@ -92,7 +88,6 @@ class BookItem extends StatelessWidget {
 
                 addTabToList(ViewBook(tabListHere, book, 1, refreshLibrary,
                     tabListHere.length, closeTab));
-                TabsDynamic(tabListHere);
               }
             },
             child: Card(

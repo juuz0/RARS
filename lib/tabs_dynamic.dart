@@ -1,11 +1,10 @@
 import 'dart:developer';
-import 'book.dart';
 
 import 'package:flutter/material.dart';
 
 class TabsDynamic extends StatefulWidget {
-  List<dynamic> tabListHere;
-  TabsDynamic(this.tabListHere, {Key? key}) : super(key: key);
+  final List<dynamic> tabListHere;
+  const TabsDynamic(this.tabListHere, {Key? key}) : super(key: key);
   @override
   _TabsDynamicState createState() => _TabsDynamicState();
 }
@@ -19,6 +18,11 @@ class _TabsDynamicState extends State<TabsDynamic> {
     } else {
       return widget.tabListHere[index].book.title;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -46,20 +50,21 @@ class CustomTabView extends StatefulWidget {
   final int itemCount;
   final IndexedWidgetBuilder tabBuilder;
   final IndexedWidgetBuilder pageBuilder;
-  Widget? stub;
+  final Widget? stub;
   final ValueChanged<int> onPositionChange;
   final ValueChanged<double> onScroll;
   final int initPosition;
 
-  CustomTabView({
-    required this.itemCount,
-    required this.tabBuilder,
-    required this.pageBuilder,
-    this.stub,
-    required this.onPositionChange,
-    required this.onScroll,
-    required this.initPosition,
-  });
+  const CustomTabView(
+      {required this.itemCount,
+      required this.tabBuilder,
+      required this.pageBuilder,
+      this.stub,
+      required this.onPositionChange,
+      required this.onScroll,
+      required this.initPosition,
+      Key? key})
+      : super(key: key);
 
   @override
   _CustomTabsState createState() => _CustomTabsState();
@@ -92,13 +97,12 @@ class _CustomTabsState extends State<CustomTabView>
       controller.removeListener(onPositionChange);
       controller.dispose();
 
-      if (widget.initPosition != null) {
-        _currentPosition = widget.initPosition;
-      }
+      _currentPosition = widget.initPosition;
 
       if (_currentPosition > widget.itemCount - 1) {
         _currentPosition = widget.itemCount - 1;
         _currentPosition = _currentPosition < 0 ? 0 : _currentPosition;
+        // ignore: unnecessary_type_check
         if (widget.onPositionChange is ValueChanged<int>) {
           WidgetsBinding.instance?.addPostFrameCallback((_) {
             if (mounted) {
@@ -118,7 +122,7 @@ class _CustomTabsState extends State<CustomTabView>
         controller.addListener(onPositionChange);
         controller.animation?.addListener(onScroll);
       });
-    } else if (widget.initPosition != null) {
+    } else {
       controller.animateTo(widget.initPosition);
     }
 
@@ -178,6 +182,7 @@ class _CustomTabsState extends State<CustomTabView>
   onPositionChange() {
     if (!controller.indexIsChanging) {
       _currentPosition = controller.index;
+      // ignore: unnecessary_type_check
       if (widget.onPositionChange is ValueChanged<int>) {
         widget.onPositionChange(_currentPosition);
       }
@@ -185,6 +190,7 @@ class _CustomTabsState extends State<CustomTabView>
   }
 
   onScroll() {
+    // ignore: unnecessary_type_check
     if (widget.onScroll is ValueChanged<double>) {
       widget.onScroll(controller.animation!.value);
     }

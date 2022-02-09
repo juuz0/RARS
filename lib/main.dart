@@ -17,33 +17,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<dynamic> TabList = [];
+  List<dynamic> tabList = [];
 
   @override
   void initState() {
-    TabList.add(MainScreen(_addToList, _closeTab, TabList));
+    tabList.add(MainScreen(_addToList, _closeTab, tabList));
     super.initState();
   }
 
   void _addToList(dynamic vb) {
     setState(() {
-      TabList.add(vb);
+      tabList.add(vb);
     });
     log("added added");
   }
 
   void _closeTab(int index) {
-    setState(() {
-      try {
-        TabList.removeAt(index);
-      } catch (e) {
-        TabList.removeLast();
-      }
-      log(TabList.toString());
-    });
+    // setState(() {
+    //   try {
+    //     tabList.removeAt(index);
+    //   } catch (e) {
+    //     tabList.removeLast();
+    //   }
+    //   log(tabList.toString());
+    // });
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -53,8 +52,8 @@ class _MyAppState extends State<MyApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      // home: TabsDynamic(TabList, viewbook),
-      home: TabsDynamic(TabList),
+      // home: TabsDynamic(tabList, viewbook),
+      home: TabsDynamic(tabList),
     );
   }
 }

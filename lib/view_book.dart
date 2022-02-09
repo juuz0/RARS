@@ -16,6 +16,11 @@ class ViewBook extends StatefulWidget {
   final Function refreshLibrary;
   final int index;
   final Function closeTab;
+
+  String get title {
+    return book.title;
+  }
+
   const ViewBook(this.tabListHere, this.book, this.pageStart,
       this.refreshLibrary, this.index, this.closeTab,
       {Key? key})
@@ -78,7 +83,6 @@ class _ViewBookState extends State<ViewBook> {
 
   void resetInitPage(Book b) {
     m.updateBook(b.title, b.path, b.image, "lastRead", _actualPageNumber);
-    widget.refreshLibrary();
   }
 
   void updateBookmarks(int pageno) {
@@ -145,21 +149,21 @@ class _ViewBookState extends State<ViewBook> {
               ),
               backgroundColor: Colors.transparent,
               elevation: 0,
-              leading: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: IconButton(
-                      icon: const Icon(Icons.close),
-                      color: Colors.amber,
-                      onPressed: () {
-                        widget.closeTab(widget.index);
-                        resetInitPage(widget.book);
-                      },
-                    ),
-                  ),
-                ],
-              ),
+              // leading: Row(
+              //   children: [
+              //     Expanded(
+              //       flex: 1,
+              //       child: IconButton(
+              //         icon: const Icon(Icons.close),
+              //         color: Colors.amber,
+              //         onPressed: () {
+              //           widget.closeTab(widget.index);
+              //           resetInitPage(widget.book);
+              //         },
+              //       ),
+              //     ),
+              //   ],
+              // ),
               actions: <Widget>[
                 Container(
                   alignment: Alignment.center,
